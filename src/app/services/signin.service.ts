@@ -15,6 +15,6 @@ export class SigninService extends MainService {
     }
 
   signin(payload: any) {
-    return this.post(`${this.endpoint}`, payload).pipe();
+    return this.postSignin(`${this.endpoint}`, payload).pipe();
   }
 }

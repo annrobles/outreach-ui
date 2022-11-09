@@ -10,7 +10,9 @@ export abstract class MainService {
 
   getAPIBase(route: string = ''): string {
     //let serverLink = this.authSvc.url.serverlinks.find(x => ServerType[x.serverType].toLowerCase() == this._urlName.toLowerCase());
+    
     let serverLink: ServerLink = {url: "http://127.0.0.1:8000/"};
+    //let serverLink: ServerLink = {url: "http://nevisco.ca/"};
 
     if (serverLink != null) {
       return serverLink.url + route;
@@ -77,6 +79,19 @@ export abstract class MainService {
     }
   }
 
+  public postSignin( route: string, object: any, excluder: ((key: string, value: any) => any) | null = null, options: any | null = null, base: string | null = null): Observable<any> {
+    let requestOptions: any = { headers: this.commonStateChangeHeadersSignIn()};
+    if (options) {
+        requestOptions = {...requestOptions, ...options};
+    }
+
+    return this.http.post(
+        (base !== null ? (base + route) : this.getAPIBase(route)),
+        this.serialize(object, excluder),
+        requestOptions
+    );
+  }
+
   private serialize(object: any, excluder: ((key: string, value: any) => any) | null = null): string {
     try {
       return JSON.stringify(object, excluder || undefined);
@@ -90,6 +105,19 @@ export abstract class MainService {
     'Accept': 'application/json',
     'Authorization': `Bearer ${this.authorizationHeaderValue}`,
     // 'ConnectionID': this.connectionID,
+    'Content-Type': ''
+    };
+
+    if (contentType) {
+    headerConfig['Content-Type'] = contentType;
+    }
+
+    return new HttpHeaders(headerConfig);
+  }
+
+  commonStateChangeHeadersSignIn(contentType: string | null = 'application/json'): HttpHeaders {
+    const headerConfig = {
+    'Accept': 'application/json',
     'Content-Type': ''
     };
 
