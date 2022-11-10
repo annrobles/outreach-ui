@@ -1,7 +1,8 @@
 import { Availability } from "./user-profile-interface";
 
 export interface Company {
-  id: number,
+  id?: number,
+  user_id?: number;
   name: string,
   about?: string,
   link?: string,

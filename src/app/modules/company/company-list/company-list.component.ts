@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Company } from '../../../models/company.model';
 import { CompanyStatus } from '../../../models/company-status.enum';
 import { UserAccessType } from "../../../models/user-access-type.enum";
+import { CompanyService } from '../../../services/company.service';
 
 @UntilDestroy()
 @Component({
@@ -21,47 +22,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   userAccessType = UserAccessType;
   userType: number =  UserAccessType.None;
 
-  companies:Company[] = [
-    {
-      id: 2,
-      name: "Walmart",
-      email: "careers@walmart.com",
-      contact_number: "613-555-0102",
-      status: CompanyStatus.New,
-      created_at: new Date("08-18-2022"),
-      availability: {
-        morning: false,
-        afternoon: false,
-        evening: false
-      }
-    },
-    {
-      id: 1,
-      name: "Telus",
-      email: "careers@telus.com",
-      contact_number: "613-555-0158",
-      status: CompanyStatus.Contacted,
-      created_at: new Date("10-28-2022"),
-      availability: {
-        morning: false,
-        afternoon: false,
-        evening: false
-      }
-    },
-    {
-      id: 1,
-      name: "Tim Hortons",
-      email: "careers@timhortons.com",
-      contact_number: "613-453-0158",
-      status: CompanyStatus.Proposal,
-      created_at: new Date("11-01-2022"),
-      availability: {
-        morning: false,
-        afternoon: false,
-        evening: false
-      }
-    }
-  ]
+  companies:Company[] = [];
 
   CompanyStatus = CompanyStatus;
 
@@ -69,7 +30,8 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   loading: boolean = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private companySvc: CompanyService
   ) {
 
     this.userType = parseInt(localStorage.getItem("userType") || "");
@@ -90,6 +52,11 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.companySvc.getList().subscribe((result) => {
+      if (result.status) {
+        this.companies = result.company;
+      }
+    })
   }
 
   ngOnDestroy(){
@@ -100,7 +67,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   }
 
   viewCompany(company: Company) {
-    this.router.navigateByUrl('/company/edit');
+    this.router.navigateByUrl('/company/edit/' + company.id);
   }
 
   getSearchInputValue(event: any){

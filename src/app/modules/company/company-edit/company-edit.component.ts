@@ -1,9 +1,11 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Company } from '../../../models/company.model';
 import { CompanyStatus } from '../../../models/company-status.enum';
+import { CompanyService } from '../../../services/company.service';
+import { MessageService } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -17,8 +19,8 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
 
   company:Company = {
       id: 2,
-      name: "Walmart",
-      email: "careers@walmart.com",
+      name: "Company",
+      email: "careers@company.com",
       contact_number: "613-555-0102",
       status: CompanyStatus.New,
       created_at: new Date("08-18-2022"),
@@ -31,17 +33,38 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private companySvc: CompanyService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
+    let id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.companySvc.getById(parseInt(id)).subscribe((result) => {
+        if (result.status) {
+          this.company = result.company;
+          this.company.availability = JSON.parse(result.company.availability);
+        }
+      })
+    }
   }
 
   ngOnDestroy(){
   }
 
   onCompanyUpdate(eventData: { company: Company }) {
-    console.log("company ", eventData.company);
+    let payload: any = eventData.company;
+    payload.availability = JSON.stringify(eventData.company.availability);
+    
+    this.companySvc.update(payload).subscribe((result) => {
+      if (result.status) {
+        this.messageService.add({severity:'success', summary: result.message});
+        this.router.navigateByUrl('/company');
+      }
+    });
   }
 
 }

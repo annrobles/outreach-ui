@@ -40,7 +40,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'company/edit',
+    path: 'company/edit/:id',
     data: { frameless: true, userRoles: [] },
     component: CompanyEditComponent,
     canActivate: [AuthGuard]

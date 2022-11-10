@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Company } from '../../../models/company.model';
 import { CompanyStatus } from '../../../models/company-status.enum';
 import { UserAccessType } from "../../../models/user-access-type.enum";
+import { AuthService } from '../../../services/auth.service';
 
 @UntilDestroy()
 @Component({
@@ -17,7 +18,6 @@ export class CompanyDetailComponent implements OnInit, OnDestroy {
   @Output() companySubmitted = new EventEmitter<{company: Company}>();
   @Input() isNew: boolean = false;
   @Input() company: Company =  {
-    id: 0,
     name: "",
     about: "",
     link: "",
@@ -39,19 +39,12 @@ export class CompanyDetailComponent implements OnInit, OnDestroy {
   statuses: any[] = [];
 
   constructor(
-    private router: Router
+    private router: Router,
+    private authSvc: AuthService
   ) { }
 
   ngOnInit(): void {
-    // let statuses = Object.keys(CompanyStatus);
-
-    // statuses.forEach((item) => {
-    //   if (isNaN(Number(item))) {
-    //     this.companyStatuses.push(item.replace(/([A-Z])/g, ' $1').trim());
-    //   }
-    // });
-
-    this.userType = parseInt(localStorage.getItem("userType") || "");
+    this.userType = this.authSvc.user.userType;
 
     this.statuses = [
       {label: 'Unqualified', value: 5},

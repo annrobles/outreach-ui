@@ -10,9 +10,12 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
 import { MenubarModule } from 'primeng/menubar';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +34,7 @@ import { UserProfileComponent } from "./modules/user-profile/user-profile.compon
 import { UserVerificationComponent } from "./modules/main/components/user-verification/user-verification.component";
 
 import { AuthService } from './services/auth.service';
+import { CompanyService } from "./services/company.service";
 import { HeaderService } from './services/header.service';
 import { SigninService } from './services/signin.service';
 import { SignupService } from './services/signup.service';
@@ -50,9 +54,12 @@ import { AuthGuard } from "./core/auth.guard";
     DropdownModule,
     EditorModule,
     MenubarModule,
+    MessageModule,
+    MessagesModule,
     MultiSelectModule,
     ProgressBarModule,
-    TableModule
+    TableModule,
+    ToastModule
   ],
   exports: [
     StudentDetailComponent,
@@ -77,6 +84,7 @@ import { AuthGuard } from "./core/auth.guard";
   providers: [
     AuthGuard,
     AuthService,
+    CompanyService,
     HeaderService,
     SigninService,
     SignupService,

@@ -12,7 +12,7 @@ export class AuthService extends MainService {
   endpoint: string;
   user_type: UserAccessType = UserAccessType.None;
   mainNavItems: {name: string, link: string, active: boolean}[] = [];
-
+  user = JSON.parse(localStorage.getItem("user") || "");
   userTypeChange: Subject<number> = new Subject<number>();
   mainNavItemsChange: Subject<{name: string, link: string, active: boolean}[]>
   = new Subject<{name: string, link: string, active: boolean}[]>();

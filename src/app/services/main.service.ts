@@ -28,7 +28,7 @@ export abstract class MainService {
      * @param {string} route    - The path of the endpoint to be requested
      * @param {any} object      - The model to be used in the body of the request
      */
-     public post( route: string, object: any, excluder: ((key: string, value: any) => any) | null = null, options: any | null = null, base: string | null = null): Observable<any> {
+  public post( route: string, object: any, excluder: ((key: string, value: any) => any) | null = null, options: any | null = null, base: string | null = null): Observable<any> {
       let requestOptions: any = { headers: this.commonStateChangeHeaders()};
       if (options) {
           requestOptions = {...requestOptions, ...options};
