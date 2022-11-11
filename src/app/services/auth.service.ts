@@ -12,7 +12,7 @@ export class AuthService extends MainService {
   endpoint: string;
   user_type: UserAccessType = UserAccessType.None;
   mainNavItems: {name: string, link: string, active: boolean}[] = [];
-  user = JSON.parse(localStorage.getItem("user") || "");
+  user:any;
   userTypeChange: Subject<number> = new Subject<number>();
   mainNavItemsChange: Subject<{name: string, link: string, active: boolean}[]>
   = new Subject<{name: string, link: string, active: boolean}[]>();
@@ -30,6 +30,11 @@ export class AuthService extends MainService {
       this.mainNavItemsChange.subscribe((value) => {
         this.mainNavItems = value;
       });
+
+      let userInfo = localStorage.getItem("user"); 
+      if (userInfo) {
+        this.user = JSON.parse(userInfo);
+      }
     }
 
   setUserType(user_type: UserAccessType) {
