@@ -11,7 +11,14 @@ import { UserBasicInformation,
   Skill,
   UserSkill } from "../../models/user-profile-interface";
 
+import { AuthService } from '../../services/auth.service';
 import { StudentService } from "../../services/student.service";
+import { UserLocationService } from "../../services/user-location.service";
+import { UserExperienceService } from "../../services/user-experience.service";
+import { UserEducationService } from "../../services/user-education.service";
+import { SkillsetService } from "../../services/skillset.service";
+import { StudentSkillsetService } from "../../services/student-skillset.service";
+import { MessageService } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -31,6 +38,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     email: "",
     contact_number: "",
     title: "",
+    link: "",
     availability: {
       morning: false,
       afternoon: false,
@@ -81,48 +89,82 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     name: "",
     total_years_experience: 0
   }
-
-  systemSkills: Skill[] = [
-    {id: 1, name: "Java"},
-    {id: 2, name: "JavaScript"},
-    {id: 7, name: "JQuery"},
-    {id: 3, name: "Swift"},
-    {id: 4, name: "PHP"},
-    {id: 5, name: "C++"},
-    {id: 6, name: "Phython"}
-  ]
+  total_years_experience: number | null = null;
 
   profileSkills: UserSkill[] = [];
-
-  filteredSystemSkills: Skill[] = this.systemSkills;
+  skillsets: any[] = [];
 
   constructor(
     private router: Router,
-    private studentSvc: StudentService
+    private authSvc: AuthService,
+    private studentSvc: StudentService,
+    private messageService: MessageService,
+    private userLocationSvc: UserLocationService,
+    private userExperienceSvc: UserExperienceService,
+    private userEducationSvc: UserEducationService,
+    private skillsetSvc: SkillsetService,
+    private studentSkillsetSvc: StudentSkillsetService
   ) {
     this.currentRouteUrl = router.url;
    }
 
   ngOnInit(): void {
+    let id = this.authSvc.user.id;
 
+    if (id) {
+      this.studentSvc.getById(parseInt(id)).subscribe((result) => {
+        if (result.status) {
+          this.userBasicInformation = result.student;
+          this.userBasicInformation.availability = JSON.parse(result.student.availability);
+        }
+      })
+
+      this.userLocationSvc.getById(parseInt(id)).subscribe((result) => {
+        if (result.status) {
+          this.userLocation = result.studentLocation;
+        }
+      })
+
+      // TO DO - get all the skillset of the student
+      // this.studentSkillsetSvc.getList(parseInt(id)).subscribe((result) => {
+      //   if (result.status) {
+      //     this.profileSkills = result.skillset;
+      //   }
+      // })
+    }
+
+    this.skillsetSvc.getList().subscribe((result) => {
+      if (result.status) {
+        this.skillsets = result.skillset;
+      }
+    })
   }
 
   ngOnDestroy(){
   }
 
-  userProfileSubmit(data: UserBasicInformation |   UserLocation | UserExperience | UserEducation | UserLanguage, profileType: UserProfileInfoType) {
+  userProfileSubmit(data: any, profileType: UserProfileInfoType) {
     let userInfo = JSON.parse(localStorage.getItem("user") || "");
 
     data.user_id = userInfo.id;
 
     switch (profileType) {
       case UserProfileInfoType.Location: {
-        break
-      }
-      case UserProfileInfoType.Skills: {
+        this.userLocationSvc.add(data).subscribe((result) => {
+          if (result.status) {
+            this.messageService.add({severity:'success', summary: result.message});
+            this.userLocation = result.studentLocation;
+          }
+        });
         break
       }
       case UserProfileInfoType.Experience: {
+        this.userExperienceSvc.add(data).subscribe((result) => {
+          if (result.status) {
+            this.messageService.add({severity:'success', summary: result.message});
+            this.userExperience = result.studentExperiences;
+          }
+        });
         break
       }
       case UserProfileInfoType.Education: {
@@ -138,48 +180,43 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         break
       }
       default: {
+        data.availability = JSON.stringify(data.availability);
         this.studentSvc.add(data).subscribe((result) => {
-          console.log("result ", result);
-          this.userBasicInformation = result.student;
+          if (result.status) {
+            this.messageService.add({severity:'success', summary: result.message});
+            this.userBasicInformation = result.student;
+          }          
         });
         break
       }
     }
   }
 
-  filterSkill(str: string) {
-    if (str == "") {
-      this.filteredSystemSkills = this.systemSkills;
-      this.showSkillDropDown = false;
-    }
-    else {
-      this.showSkillDropDown = true;
-    }
-
-    this.filteredSystemSkills = this.filteredSystemSkills.filter((skill) => {
-      let skillName = (skill.name).toLowerCase();
-      return skillName.startsWith(str.toLowerCase());
-    });
-  }
-
-  selectSkill(skill: Skill) {
-    this.newSkill.name = skill.name;
-    this.newSkill.skillset_id = skill.id;
-    this.showSkillDropDown = false;
-  }
-
   addSkill() {
+    let userInfo = JSON.parse(localStorage.getItem("user") || "");
+
     this.profileSkills.push({
       skillset_id: this.newSkill.skillset_id,
       name: this.newSkill.name,
-      total_years_experience: this.newSkill.total_years_experience
+      total_years_experience: this.total_years_experience
     });
 
-    this.newSkill = {
-      id: 0,
-      name: "",
-      total_years_experience: 0
-    }
+    this.studentSkillsetSvc.add({
+      user_id: userInfo.id,
+      skillset_id: this.newSkill.skillset_id,
+      name: this.newSkill.name,
+      total_years_experience: this.total_years_experience
+    }).subscribe((result) => {
+      if (result.status) {
+        this.messageService.add({severity:'success', summary: result.message});
+        this.newSkill = {
+          id: 0,
+          name: "",
+          total_years_experience: null
+        }
+        this.total_years_experience = null;
+      }
+    });
   }
 
   deleteSkill(profileSkill: UserSkill) {

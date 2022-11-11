@@ -9,6 +9,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { MenubarModule } from 'primeng/menubar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -38,8 +39,12 @@ import { CompanyService } from "./services/company.service";
 import { HeaderService } from './services/header.service';
 import { SigninService } from './services/signin.service';
 import { SignupService } from './services/signup.service';
+import { SkillsetService } from "./services/skillset.service";
 import { StudentService } from './services/student.service';
-
+import { StudentSkillsetService } from './services/student-skillset.service';
+import { UserLocationService } from './services/user-location.service';
+import { UserExperienceService } from './services/user-experience.service';
+import { UserEducationService } from './services/user-education.service';
 import { AuthGuard } from "./core/auth.guard";
 @NgModule({
   imports: [
@@ -53,6 +58,7 @@ import { AuthGuard } from "./core/auth.guard";
     ButtonModule,
     DropdownModule,
     EditorModule,
+    InputNumberModule,
     MenubarModule,
     MessageModule,
     MessagesModule,
@@ -88,7 +94,12 @@ import { AuthGuard } from "./core/auth.guard";
     HeaderService,
     SigninService,
     SignupService,
-    StudentService
+    SkillsetService,
+    StudentService,
+    StudentSkillsetService,
+    UserLocationService,
+    UserExperienceService,
+    UserEducationService
   ],
   bootstrap: [AppComponent]
 })

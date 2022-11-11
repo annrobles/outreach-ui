@@ -75,18 +75,57 @@
 
     <div class="col-lg-6 col-md-6" style="text-align: left;" *ngIf="userType == userAccessType.Admin">
       <label>Status</label>
-
-
       <div class="form-floating">
         <p-dropdown [options]="statuses" [(ngModel)]="company.status" optionLabel="label" optionValue="value"></p-dropdown>
       </div>
     </div>
   </div>
-
-  <div class="row" style="text-align: left;">
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">About</label>
-      <p-editor [(ngModel)]='company.about' [style]="{'height':'320px'}"></p-editor>
+  
+  <div class="row">
+    <div class="col-lg-6 col-md-6" style="text-align: left;">
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">About</label>
+        <p-editor [(ngModel)]='company.about' [style]="{'height':'320px'}"></p-editor>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6" style="text-align: left;">
+      <div class="row"><label>Skills Needed</label></div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <p-dropdown [options]="skillsets" [(ngModel)]="selectedSkillset" optionLabel="name" [filter]="true" filterBy="name"
+            [showClear]="true" placeholder="Select a skill">
+            <ng-template pTemplate="selectedItem">
+              <div class="country-item country-item-value" *ngIf="selectedSkillset">
+                <div>{{selectedSkillset.name}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>  
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <p-inputNumber [(ngModel)]="total_years_experience"></p-inputNumber>
+        </div>
+        <div class="col-lg-2 col-md-2">
+          <button pButton pRipple type="button" icon="pi pi-plus-circle" class="p-button-rounded p-button-text" (click)="addSkill()"></button>
+        </div>
+      </div>
+      <div class="row">
+        <p-table *ngIf="company.companySkillsetNeed" [value]="company.companySkillsetNeed" styleClass="p-datatable-sm">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Name</th>
+                  <th># of Years Experience</th>
+                  <th></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-skill>
+              <tr>
+                  <td>{{skill.name}}</td>
+                  <td>{{skill.total_years_experience}}</td>
+                  <td><button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text" (click)="removeSkill(skill)"></button></td>
+              </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </div>
   </div>
 

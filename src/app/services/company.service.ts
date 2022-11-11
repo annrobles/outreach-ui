@@ -28,4 +28,8 @@ export class CompanyService extends MainService {
   getById(id: number) {
     return this.get(`${this.endpoint}/${id}`).pipe();
   }
+
+  addSkillsetNeed(payload: any) {
+    return this.post(`api/skillsetNeed`, payload).pipe();
+  }
 }

@@ -18,6 +18,7 @@ export class StudentDetailComponent implements OnInit, OnDestroy {
     {name: "Experience", link: "/dashboard/user-profile/experience", active: false},
     {name: "Education", link: "/dashboard/user-profile/education", active: false},
     {name: "Languages", link: "/dashboard/user-profile/languages", active: false},
+    {name: "Video Recording", link: "/dashboard/user-profile/video-recording", active: false},
     {name: "Documents", link: "/dashboard/user-profile/documents", active: false},
     {name: "Agreements", link: "/dashboard/user-profile/agreements", active: false}
   ];

@@ -6,6 +6,7 @@ export interface UserBasicInformation {
   email: string,
   contact_number: string,
   title: string,
+  link: string,
   availability: Availability,
   about: string
 }
@@ -73,7 +74,7 @@ export interface UserSkill {
   id?: number,
   skillset_id?: number,
   name: string,
-  total_years_experience: number
+  total_years_experience: number | null
 }
 
 export interface UserProfileNavItem {

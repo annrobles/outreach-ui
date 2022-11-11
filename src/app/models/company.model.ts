@@ -8,8 +8,15 @@ export interface Company {
   link?: string,
   email?: string,
   contact_number: string,
-  company_skillset_id?: string,
   status: number,
   created_at?: Date,
-  availability: Availability
+  availability: Availability,
+  companySkillsetNeed?: CompanySkillsetNeed[]
+}
+
+export interface CompanySkillsetNeed {
+  id?: number,
+  company_id?: number,
+  skillset_id?: number,
+  total_years_experience?: number
 }

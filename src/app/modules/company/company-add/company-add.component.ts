@@ -2,7 +2,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Company } from '../../../models/company.model';
+import { Company, CompanySkillsetNeed } from '../../../models/company.model';
 import { CompanyStatus } from '../../../models/company-status.enum';
 import { AuthService } from '../../../services/auth.service';
 import { CompanyService } from '../../../services/company.service';
@@ -24,12 +24,13 @@ export class CompanyAddComponent implements OnInit, OnDestroy {
     email: "",
     contact_number: "",
     status: CompanyStatus.New,
-    user_id: this.authSvc.user.id,
+    user_id: 0,
     availability: {
       morning: false,
       afternoon: false,
       evening: false
-    }
+    },
+    companySkillsetNeed: []
   }
 
   constructor(
@@ -49,10 +50,16 @@ export class CompanyAddComponent implements OnInit, OnDestroy {
   onCompanyAdded(eventData: { company: Company }) {
     let payload: any = eventData.company;
     payload.availability = JSON.stringify(eventData.company.availability);
-    
+    payload.user_id = this.authSvc.user.id;
+
     this.companySvc.add(payload).subscribe((result) => {
       if (result.status) {
         this.messageService.add({severity:'success', summary: result.message});
+        if (eventData.company.companySkillsetNeed) {
+          eventData.company.companySkillsetNeed.forEach(skillset => {
+            this.companySvc.addSkillsetNeed({"company_id": result.company.id, "skillset_id": skillset.id, "total_years_experience": skillset.total_years_experience}).subscribe();            
+          });
+        }
         this.router.navigateByUrl('/company');
       }
     });

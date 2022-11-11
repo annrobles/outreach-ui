@@ -83,6 +83,10 @@ const routes: Routes = [
             component: UserProfileComponent
           },
           {
+            path: 'video-recording',
+            component: UserProfileComponent
+          },
+          {
             path: 'agreements',
             component: UserProfileComponent
           }

@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { MainService } from "./main.service";
 
 @Injectable()
-export class StudentService extends MainService {
+export class UserLocationService extends MainService {
   endpoint: string;
 
   constructor(
     http: HttpClient) {
         super(http);
-        this.endpoint = 'api/student';
+        this.endpoint = 'api/userLocation';
     }
 
   add(payload: any) {
