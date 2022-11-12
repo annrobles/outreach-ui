@@ -24,7 +24,6 @@ import { CompanyAddComponent } from "./modules/company/company-add/company-add.c
 import { CompanyDetailComponent } from "./modules/company/company-detail/company-detail.component";
 import { CompanyEditComponent } from "./modules/company/company-edit/company-edit.component";
 import { CompanyListComponent } from "./modules/company/company-list/company-list.component";
-import { DashboardComponent } from "./modules/main/components/dashboard/dashboard.component";
 import { HeaderComponent } from "./modules/main/components/header/header.component";
 import { SigninComponent } from "./modules/main/components/signin/signin.component";
 import { SignupComponent } from './modules/main/components/signup/signup.component';
@@ -42,9 +41,7 @@ import { SignupService } from './services/signup.service';
 import { SkillsetService } from "./services/skillset.service";
 import { StudentService } from './services/student.service';
 import { StudentSkillsetService } from './services/student-skillset.service';
-import { UserLocationService } from './services/user-location.service';
-import { UserExperienceService } from './services/user-experience.service';
-import { UserEducationService } from './services/user-education.service';
+import { CompanySkillsetService } from "./services/company-skillset.service";
 import { AuthGuard } from "./core/auth.guard";
 @NgModule({
   imports: [
@@ -77,7 +74,6 @@ import { AuthGuard } from "./core/auth.guard";
     CompanyEditComponent,
     CompanyDetailComponent,
     CompanyListComponent,
-    DashboardComponent,
     HeaderComponent,
     SigninComponent,
     SignupComponent,
@@ -97,9 +93,7 @@ import { AuthGuard } from "./core/auth.guard";
     SkillsetService,
     StudentService,
     StudentSkillsetService,
-    UserLocationService,
-    UserExperienceService,
-    UserEducationService
+    CompanySkillsetService
   ],
   bootstrap: [AppComponent]
 })

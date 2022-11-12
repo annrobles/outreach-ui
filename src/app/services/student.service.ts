@@ -12,11 +12,16 @@ export class StudentService extends MainService {
         this.endpoint = 'api/student';
     }
 
-  add(payload: any) {
-    return this.post(`${this.endpoint}`, payload).pipe();
+  update(id: number, payload: any) {
+    return this.put(`${this.endpoint}/${id}`, payload).pipe();
   }
 
   getById(id: number) {
     return this.get(`${this.endpoint}/${id}`).pipe();
   }
+
+  getList() {
+    return this.get(`${this.endpoint}`).pipe();
+  }
 }
+

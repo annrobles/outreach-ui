@@ -1,6 +1,6 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError} from '@angular/router';
 
 import { UserAccessType } from "../../../../models/user-access-type.enum";
 
@@ -39,6 +39,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.mainNavItemsChange.subscribe(value => {
       this.mainNavItems = value;
     });
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        // Show progress spinner or progress bar
+      }
+
+      if (event instanceof NavigationEnd) {    
+        if (event.url == "/signin" || event.url == "/signup" || event.url  == "/")  {
+          this.headerVisible = false;
+        }
+      }
+    });
    }
 
   ngOnInit(): void {
@@ -74,6 +86,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.setItem("token", "");
     localStorage.setItem("user", "");
     this.router.navigateByUrl('/signin');
+    this.authService.user = null;
   }
 
 }

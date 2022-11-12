@@ -2,11 +2,13 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Company, CompanySkillsetNeed } from '../../../models/company.model';
+import { Company, CompanySkillsets } from '../../../models/company.model';
 import { CompanyStatus } from '../../../models/company-status.enum';
 import { UserAccessType } from "../../../models/user-access-type.enum";
 import { AuthService } from '../../../services/auth.service';
 import { SkillsetService } from "../../../services/skillset.service";
+import { CompanySkillsetService } from "../../../services/company-skillset.service";
+import { MessageService } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -20,17 +22,18 @@ export class CompanyDetailComponent implements OnInit, OnDestroy {
   @Input() isNew: boolean = false;
   @Input() company: Company =  {
     name: "",
-    about: "",
+    job_description: "",
     link: "",
     email: "",
     contact_number: "",
     status: CompanyStatus.New,
-    availability: {
-      morning: false,
-      afternoon: false,
-      evening: false
+    source: {
+      placement: true,
+      coop: true,
+      other: false
     },
-    companySkillsetNeed: []
+    other_specify: "",
+    skillsets: []
   }
 
   CompanyStatus = CompanyStatus;
@@ -40,17 +43,19 @@ export class CompanyDetailComponent implements OnInit, OnDestroy {
   userAccessType = UserAccessType;
   statuses: any[] = [];
   skillsets: any[] = [];
-  selectedSkillset: {id: number, name: string, total_years_experience: number} = {id: 0, name: "", total_years_experience: 0};
-  total_years_experience: number = 0;
+  selectedSkillset: {id: number, name: string, total_years_experience: number | null} = {id: 0, name: "", total_years_experience: null};
+  total_years_experience: number | null = null;
 
   constructor(
     private router: Router,
     private authSvc: AuthService,
-    private skillsetSvc: SkillsetService
+    private skillsetSvc: SkillsetService,
+    private companySkillsetSvc : CompanySkillsetService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
-    this.userType = this.authSvc.user.userType;
+    this.userType = this.authSvc.user.user_type_id;
 
     this.statuses = [
       {label: 'Unqualified', value: 5},
@@ -65,7 +70,7 @@ export class CompanyDetailComponent implements OnInit, OnDestroy {
       if (result.status) {
         this.skillsets = result.skillset;
       }
-    })
+    });
   }
 
   ngOnDestroy(){
@@ -82,10 +87,32 @@ export class CompanyDetailComponent implements OnInit, OnDestroy {
 
   addSkill() {
     this.selectedSkillset.total_years_experience = this.total_years_experience;
-    this.company.companySkillsetNeed?.push(this.selectedSkillset);
+    this.company.skillsets?.push({
+      skillset_id: this.selectedSkillset.id,
+      name: this.selectedSkillset.name,
+      total_years_experience: this.total_years_experience,
+      skill: this.selectedSkillset
+    });
+    
+    this.companySkillsetSvc.add({
+      company_id: this.company.id,
+      skillset_id: this.selectedSkillset.id,
+      name: this.selectedSkillset.name,
+      total_years_experience: this.total_years_experience
+    }).subscribe((result) => {
+      if (result.status) {
+        this.messageService.add({severity:'success', summary: result.message});
+        this.selectedSkillset = {
+          id: 0,
+          name: "",
+          total_years_experience: null
+        }
+        this.total_years_experience = null;
+      }
+    });
   }
 
-  removeSkill(skill: CompanySkillsetNeed) {
+  removeSkill(skill: CompanySkillsets) {
     
   }
 }

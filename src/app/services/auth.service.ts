@@ -43,7 +43,7 @@ export class AuthService extends MainService {
 
     if (this.user_type == UserAccessType.Student) {
       this.mainNavItems = [
-        {name: "Home", link: "/dashboard/user-profile/basic-info", active: true},
+        {name: "User Info", link: "/user-info", active: true},
         {name: "Company", link: "/company", active: false}
       ];
     }

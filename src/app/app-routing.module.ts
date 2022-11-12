@@ -6,7 +6,6 @@ import { AuthGuard } from "./core/auth.guard";
 import { CompanyAddComponent } from "./modules/company/company-add/company-add.component";
 import { CompanyEditComponent } from "./modules/company/company-edit/company-edit.component";
 import { CompanyListComponent } from "./modules/company/company-list/company-list.component";
-import { DashboardComponent } from "./modules/main/components/dashboard/dashboard.component";
 import { SigninComponent } from "./modules/main/components/signin/signin.component";
 import { SignupComponent } from './modules/main/components/signup/signup.component';
 import { StudentDetailComponent } from "./modules/student/components/student-detail/student-detail.component";
@@ -46,53 +45,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'dashboard',
+    path: 'user-info',
     data: { frameless: true, userRoles: [] },
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'user-profile',
-        children: [
-          {
-            path: 'basic-info',
-            component: UserProfileComponent
-          },
-          {
-            path: 'location',
-            component: UserProfileComponent
-          },
-          {
-            path: 'skills',
-            component: UserProfileComponent
-          },
-          {
-            path: 'experience',
-            component: UserProfileComponent
-          },
-          {
-            path: 'education',
-            component: UserProfileComponent
-          },
-          {
-            path: 'languages',
-            component: UserProfileComponent
-          },
-          {
-            path: 'documents',
-            component: UserProfileComponent
-          },
-          {
-            path: 'video-recording',
-            component: UserProfileComponent
-          },
-          {
-            path: 'agreements',
-            component: UserProfileComponent
-          }
-        ]
-      }
-    ]
+    component: UserProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'signup',
@@ -112,7 +68,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'student-view',
+    path: 'student-view/:id',
     data: { frameless: true, userRoles: [Roles.ADMIN, Roles.COMPANY] },
     component: StudentViewComponent,
     canActivate: [AuthGuard]
