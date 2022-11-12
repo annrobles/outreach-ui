@@ -9,10 +9,9 @@ export abstract class MainService {
   private readonly authorizationHeaderValue = localStorage.getItem("token") || "";
 
   getAPIBase(route: string = ''): string {
-    //let serverLink = this.authSvc.url.serverlinks.find(x => ServerType[x.serverType].toLowerCase() == this._urlName.toLowerCase());
-    
-    let serverLink: ServerLink = {url: "http://127.0.0.1:8000/"};
-    //let serverLink: ServerLink = {url: "http://nevisco.ca/"};
+
+    //let serverLink: ServerLink = {url: "http://127.0.0.1:8000/"};
+    let serverLink: ServerLink = {url: "http://nevisco.ca/"};
 
     if (serverLink != null) {
       return serverLink.url + route;
