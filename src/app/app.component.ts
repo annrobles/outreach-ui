@@ -17,5 +17,5 @@ export class AppComponent implements OnInit {
     this.primengConfig.ripple = true;
   }
 
-  title = 'Worker Resource';
+  title = 'Outreach';
 }
