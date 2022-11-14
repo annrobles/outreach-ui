@@ -26,14 +26,15 @@
     </div>
     <div class="col-lg-6 col-md-6">
       <div class="row">
-        <label style="text-align: left;">Email</label>
-        <div class="form-floating">
+        <label style="text-align: left;">Email<span class="required">*</span></label>
+        <div class="form-floating" style="text-align: left;">
           <input type="text"
             class="form-control"
             id="floatingInput"
             [(ngModel)]="company.email"
             name="last_name"
             autocomplete="off">
+            <span class="required" *ngIf="company.email == ''">Email is required.</span>
         </div>
       </div><div class="row">
         <label style="text-align: left;">Phone</label>

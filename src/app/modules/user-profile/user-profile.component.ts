@@ -78,14 +78,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   userProfileSubmit(data: any) {
-    this.studentSvc.update(this.user.student.id, data).subscribe((result) => {
-      if (result.status) {
-        this.messageService.add({severity:'success', summary: result.message});
-        this.userBasicInformation = result.student;
-        this.authSvc.user.student = result.student;
-        localStorage.setItem("user", `${JSON.stringify(this.authSvc.user)}`);
+    this.studentSvc.update(this.user.student.id, data).subscribe(
+      (result) => {
+        if (result.status) {
+          this.messageService.add({severity:'success', summary: result.message});
+          this.userBasicInformation = result.student;
+          this.authSvc.user.student = result.student;
+          localStorage.setItem("user", `${JSON.stringify(this.authSvc.user)}`);
+        }
+      },
+      (errors) => {
+        if (errors["error"].hasOwnProperty("errors")) {
+          this.messageService.add({severity:'error', summary: errors["error"]["errors"]["email"][0]});
+        }
+        else {
+          this.messageService.add({severity:'error', summary: errors["error"].message});
+        }
       }
-    });
+    );
   }
 
   addSkill() {

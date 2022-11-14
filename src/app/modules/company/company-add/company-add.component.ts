@@ -33,13 +33,23 @@ export class CompanyAddComponent implements OnInit, OnDestroy {
     let payload: any = eventData.company;
     payload.source = JSON.stringify(eventData.company.source);
     payload.student_id = this.authSvc.user.student.id;
-
-    this.companySvc.add(payload).subscribe((result) => {
-      if (result.status) {
-        this.messageService.add({severity:'success', summary: result.message});
-        this.router.navigateByUrl('/company');
+    
+    this.companySvc.add(payload).subscribe(
+      (result) => {
+        if (result.status) {
+          this.messageService.add({severity:'success', summary: result.message});
+          this.router.navigateByUrl('/company');
+        }
+      },
+      (errors) => {
+        if (errors["error"].hasOwnProperty("errors")) {
+          this.messageService.add({severity:'error', summary: errors["error"]["errors"]["email"][0]});
+        }
+        else {
+          this.messageService.add({severity:'error', summary: errors["error"].message});
+        }
       }
-    });
+    );
   }
 
 }
