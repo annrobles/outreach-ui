@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row company-add-button mb-3" *ngIf="userType == userAccessType.Company">
+      <div class="form-floating">
+        <button class="w-30 btn btn-sm btn-primary student-detail-container_add" type="submit" (click)="addJob()">
+          <span>Add Job</span>
+        </button>
+      </div>
+    </div>
+  
+    <div class="card">
+      <p-table #dt2 [value]="jobs" dataKey="id"
+          [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['name','email','contact_number', 'created_at', 'status']">
+          <ng-template pTemplate="caption">
+              <div class="flex">
+                  <span>
+                    List of Jobs
+                  </span>
+                  <span class="p-input-icon-left ml-auto">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (input)="dt2.filterGlobal(getSearchInputValue($event), 'contains')" placeholder="Search keyword" class="p-inputtext p-component p-element"/>
+                  </span>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th scope="col" pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+              <th scope="col" pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+            </tr>
+              <tr>
+                  <th>
+                      <p-columnFilter type="text" field="name"></p-columnFilter>
+                  </th>
+                  <th>
+                      <p-columnFilter type="text" field="description"></p-columnFilter>
+                  </th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-job>
+              <tr (click)="viewJob(job)">
+                <td>
+                  {{ job.name }}
+                </td>
+                <td>
+                  <span class="image-text">{{ job.description }}</span>
+                </td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="5">No jobs found.</td>
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+  </div>
+  

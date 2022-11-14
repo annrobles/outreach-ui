@@ -13,6 +13,10 @@ import { StudentListComponent } from "./modules/student/components/student-list/
 import { StudentViewComponent } from "./modules/student/components/student-view/student-view.component";
 import { UserProfileComponent } from "./modules/user-profile/user-profile.component";
 import { UserVerificationComponent } from "./modules/main/components/user-verification/user-verification.component";
+import { JobAddComponent } from './modules/job/job-add/job-add.component';
+import { JobDetailComponent } from './modules/job/job-detail/job-detail.component';
+import { JobEditComponent } from './modules/job/job-edit/job-edit.component';
+import { JobListComponent } from './modules/job/job-list/job-list.component';
 import { Roles } from './models/user-access-type.enum';
 
 const routes: Routes = [
@@ -77,6 +81,23 @@ const routes: Routes = [
     path: 'user-verification',
     data: { frameless: true },
     component: UserVerificationComponent
+  },
+  {
+    path: 'job',
+    data: { frameless: true },
+    component: JobListComponent
+  },
+  {
+    path: 'job/add',
+    data: { frameless: true, userRoles: [Roles.ADMIN, Roles.COMPANY] },
+    component: JobAddComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'job/edit/:id',
+    data: { frameless: true, userRoles: [Roles.COMPANY] },
+    component: JobAddComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

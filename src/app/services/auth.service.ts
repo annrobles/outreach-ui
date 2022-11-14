@@ -52,7 +52,13 @@ export class AuthService extends MainService {
       this.mainNavItems = [
         {name: "Candidates", link: "/student-list", active: true},
         {name: "Company", link: "/company", active: false},
-        //{name: "Jobs", link: "/student-list", active: false}
+        {name: "Jobs", link: "/job", active: false}
+      ]
+    }
+
+    if (this.user_type == UserAccessType.Company) {
+      this.mainNavItems = [
+        {name: "Jobs", link: "/job", active: true}
       ]
     }
 

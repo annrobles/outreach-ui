@@ -55,6 +55,9 @@ export class SigninComponent implements OnInit, OnDestroy {
           else if (result.user.user_type_id == UserAccessType.Admin) {
             this.router.navigateByUrl('/student-list');
           }
+          else if (result.user.user_type_id == UserAccessType.Company) {
+            this.router.navigateByUrl('/job');
+          }
           this.messageService.add({severity:'success', summary: result.message});
         } else {
           this.messageService.add({severity:'error', summary: result.message});
