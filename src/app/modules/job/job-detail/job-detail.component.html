@@ -1,0 +1,55 @@
+<div class="student-detail-container student-detail-container__basic-info card" *ngIf="job && userType == userAccessType.Company">
+    <div class="row">
+        <label style="text-align: left;">Name:</label>
+        <div class="form-floating">
+          <input type="text"
+            class="form-control"
+            id="floatingInput"
+            [(ngModel)]="job.name"
+            name="first_name"
+            autocomplete="off">
+        </div>
+    </div>
+  
+    
+    <div class="row mt-3 mb-3" style="text-align: left;">
+        <div class="form-group">
+            <label style="text-align: left;">Description:</label>
+            <p-editor [(ngModel)]='job.description' [style]="{'height':'420px'}"></p-editor>
+        </div>
+    </div>
+  
+    <div class="row student-detail-container__submit">
+      <div class="col-lg-4 col-md-4"></div>
+      <div class="col-lg-4 col-md-4"><button class="w-100 btn btn-lg btn-primary student-detail-container__submit-primary" type="submit" (click)="jobSubmit()">{{ isNew ? "SUBMIT" : "UPDATE" }}</button></div>
+      <div class="col-lg-4 col-md-4"></div>
+    </div>
+</div>
+
+<div class="row company-add-button mb-3 text-right" *ngIf="userType == userAccessType.None || userType == userAccessType.Student">
+  <div class="form-floating">
+    <button class="w-30 btn btn-sm btn-primary student-detail-container__submit-primary" type="submit" (click)="applyJob()">
+      <span>Apply</span>
+    </button>
+  </div>
+</div>
+
+<div class="student-detail-container student-detail-container__basic-info card" *ngIf="job && userType != userAccessType.Company">
+  
+  <div class="row">
+      <label style="text-align: left;"><b>Name:</b></label>
+      <div class="form-floating" style="text-align: left;">
+        <span>{{ job.name }}</span>
+      </div>
+  </div>
+
+  
+  <div class="row mt-3 mb-3" style="text-align: left;">
+      <div class="form-group">
+          <label style="text-align: left;"><b>Description:</b></label>
+          <div [innerHTML]="job.description"></div>
+      </div>
+  </div>
+</div>
+
+  

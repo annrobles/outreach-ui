@@ -28,8 +28,8 @@ export class CompanyDetailComponent implements OnInit, OnDestroy {
     contact_number: "",
     status: CompanyStatus.New,
     source: {
-      placement: true,
-      coop: true,
+      placement: false,
+      coop: false,
       other: false
     },
     other_specify: "",

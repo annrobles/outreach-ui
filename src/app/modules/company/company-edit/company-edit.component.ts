@@ -46,12 +46,22 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
     let payload: any = eventData.company;
     payload.source = JSON.stringify(eventData.company.source);
     if (this.company.id) {
-      this.companySvc.update(this.company.id, payload).subscribe((result) => {
-        if (result.status) {
-          this.messageService.add({severity:'success', summary: result.message});
-          this.router.navigateByUrl('/company');
+      this.companySvc.update(this.company.id, payload).subscribe(
+        (result) => {
+          if (result.status) {
+            this.messageService.add({severity:'success', summary: result.message});
+            this.router.navigateByUrl('/company');
+          }
+        },
+        (errors) => {
+          if (errors["error"].hasOwnProperty("errors")) {
+            this.messageService.add({severity:'error', summary: errors["error"]["errors"]["email"][0]});
+          }
+          else {
+            this.messageService.add({severity:'error', summary: errors["error"].message});
+          }
         }
-      });
+      );
     }
   }
 
