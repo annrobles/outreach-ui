@@ -95,9 +95,8 @@ const routes: Routes = [
   },
   {
     path: 'job/edit/:id',
-    data: { frameless: true, userRoles: [Roles.COMPANY] },
-    component: JobAddComponent,
-    canActivate: [AuthGuard]
+    data: { frameless: true, userRoles: [] },
+    component: JobEditComponent
   }
 ];
 

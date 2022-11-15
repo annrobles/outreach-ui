@@ -18,12 +18,10 @@
   </div>
 </div>
 
-<div class="student-view-container student-view-addition-info mt-0 mb-0">
+<div class="student-view-container student-view-addition-info mt-0 mb-6">
   <div class="col-lg-6 col-md-6 col-sm-12">
     <h5>About</h5>
-    <p>
-      {{ userInfo.about }}
-    </p>
+    <div [innerHTML]="userInfo.about"></div>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-12">
     <h5>Skills & Techologies</h5>
@@ -36,11 +34,49 @@
   </div>
 </div>
 
-<div class="mb-5">
+<div class="student-view-container student-view-addition-info mt-3 mb-3">
+  <div class="col-lg-1 col-md-1 col-sm-12">
+    <div class="row">
+      <label style="text-align: left;">Rank:</label>
+      <div class="form-floating">
+        <input type="text"
+          class="form-control student-rank"
+          id="floatingInput"
+          [(ngModel)]="userInfo.rank"
+          name="first_name"
+          autocomplete="off">
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-10 col-md-10 col-sm-12">
+    <div class="row">
+      <label style="text-align: left;">Skills:</label>
+      <div class="form-floating">
+        <input type="text"
+          class="form-control"
+          id="floatingInput"
+          [(ngModel)]="userInfo.skills"
+          name="first_name"
+          autocomplete="off">
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-12">
+    <div class="row company-add-button  text-right">
+      <div class="form-floating">
+        <button class="w-30 btn btn-sm btn-primary student-detail-container__submit-primary" type="submit" (click)="update(userInfo)">
+          <span>UPDATE</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mb-6">
   <company-list 
-  [companyHeader]="'List of Companies the User Added'" 
-  [showAddCompanyButton]="showAddCompanyButton" 
-  [adminViewingUser]="true"
-  [userId]="userId">
-</company-list>
+    [companyHeader]="'List of Companies the User Added'" 
+    [showAddCompanyButton]="showAddCompanyButton" 
+    [adminViewingUser]="true"
+    [userId]="userId">
+  </company-list>
 </div>

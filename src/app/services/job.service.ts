@@ -26,6 +26,10 @@ export class JobService extends MainService {
         return this.get(`${this.endpoint}`).pipe();
     }
 
+    getByUserId(id: number) {
+        return this.get(`${this.endpoint}/user/${id}`).pipe();
+    }
+
     getById(id: number) {
         return this.get(`${this.endpoint}/${id}`).pipe();
     }

@@ -19,9 +19,8 @@
             <th></th>
             <th scope="col" pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
             <th scope="col" pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
-            <th scope="col" *ngIf="showRank" pSortableColumn="contact_number">Contact Number <p-sortIcon field="contact_number"></p-sortIcon></th>
-            <th scope="col" *ngIf="!showRank" colspan="2" pSortableColumn="contact_number">Contact Number <p-sortIcon field="contact_number"></p-sortIcon></th>
-            <th scope="col" pSortableColumn="rank" *ngIf="showRank">Rank <p-sortIcon field="rank"></p-sortIcon></th>
+            <th scope="col" pSortableColumn="rank">Rank <p-sortIcon field="rank"></p-sortIcon></th>
+            <th scope="col" pSortableColumn="skills">Skills <p-sortIcon field="skills"></p-sortIcon></th>
           </tr>
             <tr>
                 <th></th>
@@ -31,9 +30,10 @@
                 <th>
                     <p-columnFilter type="text" field="email"></p-columnFilter>
                 </th>
-                <th *ngIf="!showRank" colspan="2"><p-columnFilter type="text" field="contact_number"></p-columnFilter></th>
-                <th *ngIf="showRank"><p-columnFilter type="text" field="contact_number"></p-columnFilter></th>
-                <th *ngIf="showRank"></th>
+                <th></th>
+                <th>
+                  <p-columnFilter type="text" field="skills"></p-columnFilter>
+                </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-student let-index="rowIndex">
@@ -51,10 +51,10 @@
                 <span class="image-text">{{ student.email }}</span>
               </td>
               <td>
-                <span class="image-text">{{ student.contact_number }}</span>
+                <span class="image-text">{{ student.rank }}</span>
               </td>
               <td>
-                <span class="image-text" *ngIf="showRank">{{ student.rank }}</span>
+                <span class="image-text">{{ student.skills }}</span>
               </td>
             </tr>
         </ng-template>

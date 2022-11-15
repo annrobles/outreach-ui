@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserAccessType } from "../../../../models/user-access-type.enum";
 import { AuthService } from '../../../../services/auth.service';
 import { StudentService } from "../../../../services/student.service";
+import { MessageService } from 'primeng/api';
 @UntilDestroy()
 @Component({
   selector: 'student-view',
@@ -23,7 +24,8 @@ export class StudentViewComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private authSvc: AuthService,
-    private studentSvc: StudentService
+    private studentSvc: StudentService,
+    private messageSvc : MessageService
   ) {
    }
 
@@ -46,5 +48,24 @@ export class StudentViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
+  }
+
+  update(userInfo: any) {
+    this.studentSvc.update(this.userId, userInfo).subscribe(
+      (result) => {
+        if (result.status) {
+          this.messageSvc.add({severity:'success', summary: result.message});
+          this.userInfo = result.student;
+        }
+      },
+      (errors) => {
+        if (errors["error"].hasOwnProperty("errors")) {
+          this.messageSvc.add({severity:'error', summary: errors["error"]["errors"]["email"][0]});
+        }
+        else {
+          this.messageSvc.add({severity:'error', summary: errors["error"].message});
+        }
+      }
+    );
   }
 }

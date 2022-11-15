@@ -32,11 +32,20 @@ export class JobListComponent implements OnInit, OnDestroy {
     if (this.authSvc.user) {
       this.userType = this.authSvc.user.user_type_id;
 
-      this.jobSvc.getById(this.authSvc.user.id).subscribe((result) => {
-        if (result.status) {
-          this.jobs = result.jobs;
-        }
-      })
+      if (this.userType == this.userAccessType.Company) {
+        this.jobSvc.getByUserId(this.authSvc.user.id).subscribe((result) => {
+          if (result.status) {
+            this.jobs = result.user_created_jobs;
+          }
+        })
+      }
+      else {
+        this.jobSvc.getList().subscribe((result) => {
+          if (result.status) {
+            this.jobs = result.jobs;
+          }
+        })        
+      }
     } else {
       this.jobSvc.getList().subscribe((result) => {
         if (result.status) {
@@ -61,4 +70,5 @@ export class JobListComponent implements OnInit, OnDestroy {
   viewJob(job: Job) {
     this.router.navigateByUrl('/job/edit/' + job.id);
   }
+
 }
