@@ -56,7 +56,7 @@ export class StudentViewComponent implements OnInit, OnDestroy {
       (result) => {
         if (result.status) {
           this.messageSvc.add({severity:'success', summary: result.message});
-          this.userInfo = result.student;
+          //this.userInfo = result.student;
         }
       },
       (errors) => {
