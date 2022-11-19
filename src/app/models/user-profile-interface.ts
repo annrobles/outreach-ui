@@ -6,7 +6,8 @@ export interface UserBasicInformation {
   email: string,
   contact_number: string,
   link: string,
-  about: string
+  about: string,
+  availability: boolean
 }
 
 export interface Source {

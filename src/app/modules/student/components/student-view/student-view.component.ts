@@ -19,7 +19,8 @@ export class StudentViewComponent implements OnInit, OnDestroy {
   userId: number = 0;
   showAddCompanyButton: boolean = false;
   userInfo: any;
-
+  availability: any[] = [{"label": "Available", "value": 1}, {"label": "UnAvailable", "value": 0}];
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,

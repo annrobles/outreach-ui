@@ -20,11 +20,14 @@ export class StudentListComponent implements OnInit, OnDestroy {
   students:Student[] = []
 
   loading: boolean = false;
+  availability: any[];
 
   constructor(
     private router: Router,
     private studentSvc: StudentService
-  ) { }
+  ) { 
+    this.availability = [{label: "Available", value: 1}, {label: "UnAvailable", value: 0}];
+  }
 
   ngOnInit(): void {
     this.studentSvc.getList().subscribe((result) => {

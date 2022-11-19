@@ -3,7 +3,7 @@
     <p-table #dt2 [value]="students" dataKey="id"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['name','email','contact_number']"
+        [globalFilterFields]="['name','email','availability','skills']"
         [reorderableColumns]="reorderableColumns">
         <ng-template pTemplate="caption">
             <div class="flex">
@@ -19,6 +19,7 @@
             <th></th>
             <th scope="col" pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
             <th scope="col" pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+            <th scope="col" pSortableColumn="availability">Availability <p-sortIcon field="availability"></p-sortIcon></th>
             <th scope="col" pSortableColumn="rank">Rank <p-sortIcon field="rank"></p-sortIcon></th>
             <th scope="col" pSortableColumn="skills">Skills <p-sortIcon field="skills"></p-sortIcon></th>
           </tr>
@@ -30,6 +31,17 @@
                 <th>
                     <p-columnFilter type="text" field="email"></p-columnFilter>
                 </th>
+                <th>
+                  <p-columnFilter field="availability" matchMode="equals" [showMenu]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown [ngModel]="value" [options]="availability" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
+                              <ng-template let-option pTemplate="item">
+                                  <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                              </ng-template>
+                          </p-dropdown>
+                      </ng-template>
+                  </p-columnFilter>
+              </th>
                 <th></th>
                 <th>
                   <p-columnFilter type="text" field="skills"></p-columnFilter>
@@ -49,6 +61,9 @@
               </td>
               <td>
                 <span class="image-text">{{ student.email }}</span>
+              </td>
+              <td>
+                <span [class]="'image-text student-badge status-' + student.availability">{{ student.availability == 1 ? "AVAILABLE" : "UNAVAILABLE" }}</span>
               </td>
               <td>
                 <span class="image-text">{{ student.rank }}</span>

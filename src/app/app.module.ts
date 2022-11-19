@@ -17,6 +17,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -67,7 +68,8 @@ import { AuthGuard } from "./core/auth.guard";
     MultiSelectModule,
     ProgressBarModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ],
   exports: [
     StudentDetailComponent,
