@@ -117,6 +117,15 @@
         </div>
       </div>
     </div>
+
+    <div class="student-view-container student-view-addition-info mt-0 mb-6">
+      <div class="col-lg-6 col-md-6" style="text-align: left;">
+        <label>Availability</label>
+        <div class="form-floating">
+          <p-dropdown [options]="availability" [(ngModel)]="userBasicInformation.availability" optionLabel="label" optionValue="value"></p-dropdown>
+        </div>
+      </div>
+    </div>
   
     <div class="row student-detail-container__submit">
       <div class="col-lg-4 col-md-4"></div>

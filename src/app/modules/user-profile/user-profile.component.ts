@@ -32,7 +32,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     contact_number: "",
     link: "",
     about: "",
-    user_id: 0
+    user_id: 0,
+    availability: false
   };
 
   newSkill: UserSkill;
@@ -40,7 +41,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   profileSkills: UserSkill[] = [];
   skillsets: any[] = [];
-
+  availability: any[] = [{"label": "Available", "value": 1}, {"label": "UnAvailable", "value": 0}]
   user: any;
 
   constructor(
@@ -65,7 +66,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     if (this.user) {
       this.userBasicInformation = this.user.student;
-
+      console.log("this.userBasicInformation ", this.userBasicInformation)
       this.studentSvc.getById(this.authSvc.user.student.id).subscribe((result) => {
         if (result.status) {
           this.profileSkills = result.student.skillsets;

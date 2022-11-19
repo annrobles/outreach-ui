@@ -13,6 +13,7 @@
         <span><i class="pi pi-phone" style="font-size: 1rem"></i>: {{ userInfo.contact_number }}</span>
         <span><i class="pi pi-envelope" style="font-size: 1rem"></i>: {{ userInfo.email }}</span>
         <span><i class="pi pi-linkedin" style="font-size: 1rem"></i>: {{ userInfo.link }}</span>
+        <div>Status: <span [class]="'student-badge status-' + userInfo.availability">{{ userInfo.availability == 1 ? "AVAILABLE" : "UNAVAILABLE" }}</span></div>
       </div>
     </div>
   </div>
