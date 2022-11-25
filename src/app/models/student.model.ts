@@ -1,4 +1,4 @@
-import { Availability } from "./user-profile-interface";
+import { Source } from "./user-profile-interface";
 
 export interface Student {
   id: number,
@@ -11,5 +11,5 @@ export interface Student {
   contact_number: string,
   student_skillset_id?: string,
   rank?: number,
-  availability: Availability
+  source: Source
 }

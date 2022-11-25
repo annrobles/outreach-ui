@@ -1,27 +1,28 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Company } from '../../../models/company.model';
-import { AuthService } from '../../../services/auth.service';
-import { CompanyService } from '../../../services/company.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { JobService } from '../../../services/job.service';
 import { MessageService } from 'primeng/api';
+import { Job } from '../../../models/job.model';
 
 @UntilDestroy()
 @Component({
-  selector: 'company-add',
-  templateUrl: './company-add.component.html',
-  styleUrls: ['./company-add.component.less']
+  selector: 'job-add',
+  templateUrl: './job-add.component.html',
+  styleUrls: ['./job-add.component.less']
 })
-export class CompanyAddComponent implements OnInit, OnDestroy {
+export class JobAddComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
     private authSvc: AuthService,
-    private companySvc: CompanyService,
+    private jobSvc: JobService,
     private messageService: MessageService
   ) {
-   }
+
+  }
 
   ngOnInit(): void {
   }
@@ -29,16 +30,15 @@ export class CompanyAddComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
   }
 
-  onCompanyAdded(eventData: { company: Company }) {
-    let payload: any = eventData.company;
-    payload.source = JSON.stringify(eventData.company.source);
-    payload.student_id = this.authSvc.user.student.id;
+  onJobAdded(eventData: { job: Job }) {
+    let payload: any = eventData.job;
+    payload.user_id = this.authSvc.user.id;
     
-    this.companySvc.add(payload).subscribe(
+    this.jobSvc.add(payload).subscribe(
       (result) => {
         if (result.status) {
           this.messageService.add({severity:'success', summary: result.message});
-          this.router.navigateByUrl('/company');
+          this.router.navigateByUrl('/job');
         }
       },
       (errors) => {
@@ -51,5 +51,4 @@ export class CompanyAddComponent implements OnInit, OnDestroy {
       }
     );
   }
-
 }

@@ -4,18 +4,11 @@ import { Router } from '@angular/router';
 
 import { UserProfileInfoType } from "../../models/user-profile-info-type.enum";
 import { UserBasicInformation,
-  UserLocation,
-  UserExperience,
-  UserEducation,
-  UserLanguage,
   Skill,
   UserSkill } from "../../models/user-profile-interface";
 
 import { AuthService } from '../../services/auth.service';
 import { StudentService } from "../../services/student.service";
-import { UserLocationService } from "../../services/user-location.service";
-import { UserExperienceService } from "../../services/user-experience.service";
-import { UserEducationService } from "../../services/user-education.service";
 import { SkillsetService } from "../../services/skillset.service";
 import { StudentSkillsetService } from "../../services/student-skillset.service";
 import { MessageService } from 'primeng/api';
@@ -37,173 +30,86 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     last_name: "",
     email: "",
     contact_number: "",
-    title: "",
     link: "",
-    availability: {
-      morning: false,
-      afternoon: false,
-      evening: false
-    },
-    about: ""
+    about: "",
+    user_id: 0,
+    availability: false
   };
 
-  userLocation: UserLocation = {
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    postal_code: "",
-    country: ""
-  }
-
-  userExperience: UserExperience = {
-    title: "",
-    company_name: "",
-    start_date: "",
-    end_date: "",
-    location: "",
-    description: ""
-  }
-
-  userEducation: UserEducation = {
-    name: "",
-    degree: "",
-    field_study: "",
-    start_date: "",
-    end_date: "",
-    grade: "",
-    description: ""
-  }
-
-  userLanguage: UserLanguage = {
-    language: {
-      english: false,
-      french: false,
-      other_specify: false
-    },
-    other_specify: ""
-  }
-
-  newSkill: UserSkill = {
-    id: 0,
-    name: "",
-    total_years_experience: 0
-  }
+  newSkill: UserSkill;
   total_years_experience: number | null = null;
 
   profileSkills: UserSkill[] = [];
   skillsets: any[] = [];
+  availability: any[] = [{"label": "Available", "value": 1}, {"label": "UnAvailable", "value": 0}]
+  user: any;
 
   constructor(
     private router: Router,
     private authSvc: AuthService,
     private studentSvc: StudentService,
     private messageService: MessageService,
-    private userLocationSvc: UserLocationService,
-    private userExperienceSvc: UserExperienceService,
-    private userEducationSvc: UserEducationService,
     private skillsetSvc: SkillsetService,
     private studentSkillsetSvc: StudentSkillsetService
   ) {
-    this.currentRouteUrl = router.url;
+    this.currentRouteUrl = router.url;    
    }
 
   ngOnInit(): void {
-    let id = this.authSvc.user.id;
-
-    if (id) {
-      this.studentSvc.getById(parseInt(id)).subscribe((result) => {
-        if (result.status) {
-          this.userBasicInformation = result.student;
-          this.userBasicInformation.availability = JSON.parse(result.student.availability);
-        }
-      })
-
-      this.userLocationSvc.getById(parseInt(id)).subscribe((result) => {
-        if (result.status) {
-          this.userLocation = result.studentLocation;
-        }
-      })
-
-      // TO DO - get all the skillset of the student
-      // this.studentSkillsetSvc.getList(parseInt(id)).subscribe((result) => {
-      //   if (result.status) {
-      //     this.profileSkills = result.skillset;
-      //   }
-      // })
-    }
+    this.user = this.authSvc.user;
 
     this.skillsetSvc.getList().subscribe((result) => {
       if (result.status) {
         this.skillsets = result.skillset;
       }
     })
+
+    if (this.user) {
+      this.userBasicInformation = this.user.student;
+      console.log("this.userBasicInformation ", this.userBasicInformation)
+      this.studentSvc.getById(this.authSvc.user.student.id).subscribe((result) => {
+        if (result.status) {
+          this.profileSkills = result.student.skillsets;
+        }
+      })
+    }
   }
 
   ngOnDestroy(){
   }
 
-  userProfileSubmit(data: any, profileType: UserProfileInfoType) {
-    let userInfo = JSON.parse(localStorage.getItem("user") || "");
-
-    data.user_id = userInfo.id;
-
-    switch (profileType) {
-      case UserProfileInfoType.Location: {
-        this.userLocationSvc.add(data).subscribe((result) => {
-          if (result.status) {
-            this.messageService.add({severity:'success', summary: result.message});
-            this.userLocation = result.studentLocation;
-          }
-        });
-        break
+  userProfileSubmit(data: any) {
+    this.studentSvc.update(this.user.student.id, data).subscribe(
+      (result) => {
+        if (result.status) {
+          this.messageService.add({severity:'success', summary: result.message});
+          this.userBasicInformation = result.student;
+          this.authSvc.user.student = result.student;
+          localStorage.setItem("user", `${JSON.stringify(this.authSvc.user)}`);
+        }
+      },
+      (errors) => {
+        if (errors["error"].hasOwnProperty("errors")) {
+          this.messageService.add({severity:'error', summary: errors["error"]["errors"]["email"][0]});
+        }
+        else {
+          this.messageService.add({severity:'error', summary: errors["error"].message});
+        }
       }
-      case UserProfileInfoType.Experience: {
-        this.userExperienceSvc.add(data).subscribe((result) => {
-          if (result.status) {
-            this.messageService.add({severity:'success', summary: result.message});
-            this.userExperience = result.studentExperiences;
-          }
-        });
-        break
-      }
-      case UserProfileInfoType.Education: {
-        break
-      }
-      case UserProfileInfoType.Languages: {
-        break
-      }
-      case UserProfileInfoType.Documents: {
-        break
-      }
-      case UserProfileInfoType.Agreements: {
-        break
-      }
-      default: {
-        data.availability = JSON.stringify(data.availability);
-        this.studentSvc.add(data).subscribe((result) => {
-          if (result.status) {
-            this.messageService.add({severity:'success', summary: result.message});
-            this.userBasicInformation = result.student;
-          }          
-        });
-        break
-      }
-    }
+    );
   }
 
   addSkill() {
-    let userInfo = JSON.parse(localStorage.getItem("user") || "");
-
     this.profileSkills.push({
-      skillset_id: this.newSkill.skillset_id,
+      skillset_id: this.newSkill.id,
       name: this.newSkill.name,
-      total_years_experience: this.total_years_experience
+      total_years_experience: this.total_years_experience,
+      skill: this.newSkill
     });
-
+    
     this.studentSkillsetSvc.add({
-      user_id: userInfo.id,
-      skillset_id: this.newSkill.skillset_id,
+      student_id: this.authSvc.user.student.id,
+      skillset_id: this.newSkill.id,
       name: this.newSkill.name,
       total_years_experience: this.total_years_experience
     }).subscribe((result) => {
@@ -220,7 +126,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   deleteSkill(profileSkill: UserSkill) {
-
+    if (profileSkill.id) {
+      this.studentSkillsetSvc.deleteById(profileSkill.id).subscribe((result) => {
+        if (result.status) {
+          this.messageService.add({severity:'success', summary: result.message});
+          this.profileSkills = this.profileSkills.filter((skill) => skill.id != profileSkill.id);
+        }
+      })
+    }
   }
 
 }

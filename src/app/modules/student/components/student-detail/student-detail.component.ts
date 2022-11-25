@@ -1,6 +1,6 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { UserProfileNavItem } from "../../../../models/user-profile-interface";
 
 @UntilDestroy()
@@ -13,22 +13,28 @@ export class StudentDetailComponent implements OnInit, OnDestroy {
 
   userProfileNavItems = [
     {name: "Basic Information", link: "/dashboard/user-profile/basic-info", active: true},
-    {name: "Location", link: "/dashboard/user-profile/location", active: false},
-    {name: "Skills", link: "/dashboard/user-profile/skills", active: false},
-    {name: "Experience", link: "/dashboard/user-profile/experience", active: false},
-    {name: "Education", link: "/dashboard/user-profile/education", active: false},
-    {name: "Languages", link: "/dashboard/user-profile/languages", active: false},
-    {name: "Video Recording", link: "/dashboard/user-profile/video-recording", active: false},
-    {name: "Documents", link: "/dashboard/user-profile/documents", active: false},
-    {name: "Agreements", link: "/dashboard/user-profile/agreements", active: false}
+    {name: "Skills", link: "/dashboard/user-profile/skills", active: false}
   ];
 
-  studentDetailHeader: string = "";
+  studentDetailHeader: string = "Basic Information";
 
   constructor(
     private router: Router
   ) {
-    this.studentDetailHeader = "Basic Information";
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        // Show progress spinner or progress bar
+      }
+
+      if (event instanceof NavigationEnd) { 
+        if (event.url == "/dashboard/user-profile/skills") {
+          this.studentDetailHeader = "Skills";
+        } else {
+          this.studentDetailHeader = "Basic Information";
+        }
+      }
+    });
   }
 
   ngOnInit(): void {

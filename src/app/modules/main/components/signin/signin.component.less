@@ -1,5 +1,6 @@
 .form-signin {
-  max-width: 330px;
+  width: 400px;
+  max-width: 600px;
   padding: 15px;
 }
 
@@ -41,5 +42,81 @@
   &:hover {
     background-color: #007eb4;
     border-color: #007eb4;
+  }
+}
+
+.job-description {
+  white-space: nowrap;
+  max-height: 100px;
+  overflow: hidden;
+  max-width: 75ch;
+  text-overflow: ellipsis;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: stretch;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+
+  > div:nth-child(2) {
+    position: relative;
+
+    p-progressspinner {
+      position: absolute;
+      top: 40%;
+    }
+
+    .form-signin.inprogress {
+      opacity: 0.5;
+    }
+  }
+}
+
+.custom-spinner .p-progress-spinner-circle {
+  animation: custom-progress-spinner-dash 1.5s ease-in-out infinite, custom-progress-spinner-color 6s ease-in-out infinite;
+}
+
+:host ::ng-deep .custom-spinner .p-progress-spinner-circle {
+  animation: custom-progress-spinner-dash 1.5s ease-in-out infinite,
+    custom-progress-spinner-color 6s ease-in-out infinite;
+}
+
+@keyframes custom-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #16697a;
+  }
+  40% {
+    stroke: #16697a;
+  }
+  66% {
+    stroke: #16697a;
+  }
+  80%,
+  90% {
+    stroke: #16697a;
+  }
+}
+
+@keyframes custom-progress-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
   }
 }

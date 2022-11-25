@@ -6,6 +6,8 @@ import { Company } from '../../../models/company.model';
 import { CompanyStatus } from '../../../models/company-status.enum';
 import { UserAccessType } from "../../../models/user-access-type.enum";
 import { CompanyService } from '../../../services/company.service';
+import { StudentService } from 'src/app/services/student.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @UntilDestroy()
 @Component({
@@ -16,8 +18,9 @@ import { CompanyService } from '../../../services/company.service';
 export class CompanyListComponent implements OnInit, OnDestroy {
 
   @Input() companyHeader: string = "List of Companies";
-  @Input() showAddApplicantButton: boolean = false;
   @Input() showAddCompanyButton: boolean = true;
+  @Input() adminViewingUser: boolean = false;
+  @Input() userId: number = 0;
 
   userAccessType = UserAccessType;
   userType: number =  UserAccessType.None;
@@ -31,10 +34,12 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private companySvc: CompanyService
+    private companySvc: CompanyService,
+    private studentSvc: StudentService,
+    private authSvc: AuthService
   ) {
 
-    this.userType = parseInt(localStorage.getItem("userType") || "");
+    this.userType = this.authSvc.user.user_type_id;
 
     this.statuses = [
         {label: 'Unqualified', value: 5},
@@ -52,11 +57,21 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.companySvc.getList().subscribe((result) => {
-      if (result.status) {
-        this.companies = result.company;
-      }
-    })
+    if (this.userType == UserAccessType.Student || this.adminViewingUser) {
+      let id = this.adminViewingUser ? this.userId : this.authSvc.user.student.id;
+      this.studentSvc.getById(id).subscribe((result) => {
+        if (result.status) {
+          this.companies = result.student.companies;
+        }
+      })
+    }
+    else if (this.userType == UserAccessType.Admin) {
+      this.companySvc.getList().subscribe((result) => {
+        if (result.status) {
+          this.companies = result.company;
+        }
+      })
+    }
   }
 
   ngOnDestroy(){

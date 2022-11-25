@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 import { MainService } from "./main.service";
 
 @Injectable()
-export class UserEducationService extends MainService {
+export class CompanySkillsetService extends MainService {
   endpoint: string;
 
   constructor(
     http: HttpClient) {
         super(http);
-        this.endpoint = 'api/userEducation';
+        this.endpoint = 'api/companySkillset';
     }
 
     add(payload: any) {
@@ -27,5 +27,9 @@ export class UserEducationService extends MainService {
 
     getById(id: number) {
         return this.get(`${this.endpoint}/${id}`).pipe();
+    }
+
+    deleteById(id: number) {
+        return this.delete(`${this.endpoint}/${id}`).pipe();
     }
 }

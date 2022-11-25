@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Company } from '../../../models/company.model';
-import { CompanyStatus } from '../../../models/company-status.enum';
 import { CompanyService } from '../../../services/company.service';
 import { MessageService } from 'primeng/api';
 
@@ -15,41 +14,29 @@ import { MessageService } from 'primeng/api';
 })
 export class CompanyEditComponent implements OnInit, OnDestroy {
 
-  CompanyStatus = CompanyStatus;
-
-  company:Company = {
-      id: 2,
-      name: "Company",
-      email: "careers@company.com",
-      contact_number: "613-555-0102",
-      status: CompanyStatus.New,
-      created_at: new Date("08-18-2022"),
-      availability: {
-        morning: true,
-        afternoon: true,
-        evening: false
-      }
-    }
-
+  company:Company;
+  isLoading: boolean = true;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private companySvc: CompanyService,
     private messageService: MessageService,
-  ) { }
-
-  ngOnInit(): void {
+  ) {
     let id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
       this.companySvc.getById(parseInt(id)).subscribe((result) => {
         if (result.status) {
           this.company = result.company;
-          this.company.availability = JSON.parse(result.company.availability);
+          this.company.source = JSON.parse(result.company.source);
         }
+        this.isLoading = false;
       })
     }
+   }
+
+  ngOnInit(): void {
   }
 
   ngOnDestroy(){
@@ -57,14 +44,25 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
 
   onCompanyUpdate(eventData: { company: Company }) {
     let payload: any = eventData.company;
-    payload.availability = JSON.stringify(eventData.company.availability);
-    
-    this.companySvc.update(payload).subscribe((result) => {
-      if (result.status) {
-        this.messageService.add({severity:'success', summary: result.message});
-        this.router.navigateByUrl('/company');
-      }
-    });
+    payload.source = JSON.stringify(eventData.company.source);
+    if (this.company.id) {
+      this.companySvc.update(this.company.id, payload).subscribe(
+        (result) => {
+          if (result.status) {
+            this.messageService.add({severity:'success', summary: result.message});
+            this.router.navigateByUrl('/company');
+          }
+        },
+        (errors) => {
+          if (errors["error"].hasOwnProperty("errors")) {
+            this.messageService.add({severity:'error', summary: errors["error"]["errors"]["email"][0]});
+          }
+          else {
+            this.messageService.add({severity:'error', summary: errors["error"].message});
+          }
+        }
+      );
+    }
   }
 
 }

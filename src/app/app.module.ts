@@ -17,6 +17,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +25,6 @@ import { CompanyAddComponent } from "./modules/company/company-add/company-add.c
 import { CompanyDetailComponent } from "./modules/company/company-detail/company-detail.component";
 import { CompanyEditComponent } from "./modules/company/company-edit/company-edit.component";
 import { CompanyListComponent } from "./modules/company/company-list/company-list.component";
-import { DashboardComponent } from "./modules/main/components/dashboard/dashboard.component";
 import { HeaderComponent } from "./modules/main/components/header/header.component";
 import { SigninComponent } from "./modules/main/components/signin/signin.component";
 import { SignupComponent } from './modules/main/components/signup/signup.component';
@@ -33,6 +33,10 @@ import { StudentListComponent } from "./modules/student/components/student-list/
 import { StudentViewComponent } from "./modules/student/components/student-view/student-view.component";
 import { UserProfileComponent } from "./modules/user-profile/user-profile.component";
 import { UserVerificationComponent } from "./modules/main/components/user-verification/user-verification.component";
+import { JobAddComponent } from './modules/job/job-add/job-add.component';
+import { JobDetailComponent } from './modules/job/job-detail/job-detail.component';
+import { JobEditComponent } from './modules/job/job-edit/job-edit.component';
+import { JobListComponent } from './modules/job/job-list/job-list.component';
 
 import { AuthService } from './services/auth.service';
 import { CompanyService } from "./services/company.service";
@@ -42,9 +46,8 @@ import { SignupService } from './services/signup.service';
 import { SkillsetService } from "./services/skillset.service";
 import { StudentService } from './services/student.service';
 import { StudentSkillsetService } from './services/student-skillset.service';
-import { UserLocationService } from './services/user-location.service';
-import { UserExperienceService } from './services/user-experience.service';
-import { UserEducationService } from './services/user-education.service';
+import { CompanySkillsetService } from "./services/company-skillset.service";
+import { JobService } from './services/job.service'; "";
 import { AuthGuard } from "./core/auth.guard";
 @NgModule({
   imports: [
@@ -65,11 +68,13 @@ import { AuthGuard } from "./core/auth.guard";
     MultiSelectModule,
     ProgressBarModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ],
   exports: [
     StudentDetailComponent,
-    CompanyListComponent
+    CompanyListComponent,
+    JobDetailComponent
   ],
   declarations: [
     AppComponent,
@@ -77,7 +82,6 @@ import { AuthGuard } from "./core/auth.guard";
     CompanyEditComponent,
     CompanyDetailComponent,
     CompanyListComponent,
-    DashboardComponent,
     HeaderComponent,
     SigninComponent,
     SignupComponent,
@@ -85,7 +89,11 @@ import { AuthGuard } from "./core/auth.guard";
     StudentListComponent,
     StudentViewComponent,
     UserProfileComponent,
-    UserVerificationComponent
+    UserVerificationComponent,
+    JobDetailComponent,
+    JobAddComponent,
+    JobEditComponent,
+    JobListComponent
   ],
   providers: [
     AuthGuard,
@@ -97,9 +105,8 @@ import { AuthGuard } from "./core/auth.guard";
     SkillsetService,
     StudentService,
     StudentSkillsetService,
-    UserLocationService,
-    UserExperienceService,
-    UserEducationService
+    CompanySkillsetService,
+    JobService
   ],
   bootstrap: [AppComponent]
 })

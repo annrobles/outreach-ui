@@ -17,8 +17,8 @@ export class CompanyService extends MainService {
     return this.post(`${this.endpoint}`, payload).pipe();
   }
 
-  update(payload: any) {
-    return this.put(`${this.endpoint}`, payload).pipe();
+  update(id: number, payload: any) {
+    return this.put(`${this.endpoint}/${id}`, payload).pipe();
   }
 
   getList() {

@@ -6,7 +6,6 @@ import { AuthGuard } from "./core/auth.guard";
 import { CompanyAddComponent } from "./modules/company/company-add/company-add.component";
 import { CompanyEditComponent } from "./modules/company/company-edit/company-edit.component";
 import { CompanyListComponent } from "./modules/company/company-list/company-list.component";
-import { DashboardComponent } from "./modules/main/components/dashboard/dashboard.component";
 import { SigninComponent } from "./modules/main/components/signin/signin.component";
 import { SignupComponent } from './modules/main/components/signup/signup.component';
 import { StudentDetailComponent } from "./modules/student/components/student-detail/student-detail.component";
@@ -14,6 +13,10 @@ import { StudentListComponent } from "./modules/student/components/student-list/
 import { StudentViewComponent } from "./modules/student/components/student-view/student-view.component";
 import { UserProfileComponent } from "./modules/user-profile/user-profile.component";
 import { UserVerificationComponent } from "./modules/main/components/user-verification/user-verification.component";
+import { JobAddComponent } from './modules/job/job-add/job-add.component';
+import { JobDetailComponent } from './modules/job/job-detail/job-detail.component';
+import { JobEditComponent } from './modules/job/job-edit/job-edit.component';
+import { JobListComponent } from './modules/job/job-list/job-list.component';
 import { Roles } from './models/user-access-type.enum';
 
 const routes: Routes = [
@@ -46,53 +49,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'dashboard',
+    path: 'user-info',
     data: { frameless: true, userRoles: [] },
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'user-profile',
-        children: [
-          {
-            path: 'basic-info',
-            component: UserProfileComponent
-          },
-          {
-            path: 'location',
-            component: UserProfileComponent
-          },
-          {
-            path: 'skills',
-            component: UserProfileComponent
-          },
-          {
-            path: 'experience',
-            component: UserProfileComponent
-          },
-          {
-            path: 'education',
-            component: UserProfileComponent
-          },
-          {
-            path: 'languages',
-            component: UserProfileComponent
-          },
-          {
-            path: 'documents',
-            component: UserProfileComponent
-          },
-          {
-            path: 'video-recording',
-            component: UserProfileComponent
-          },
-          {
-            path: 'agreements',
-            component: UserProfileComponent
-          }
-        ]
-      }
-    ]
+    component: UserProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'signup',
@@ -112,7 +72,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'student-view',
+    path: 'student-view/:id',
     data: { frameless: true, userRoles: [Roles.ADMIN, Roles.COMPANY] },
     component: StudentViewComponent,
     canActivate: [AuthGuard]
@@ -121,6 +81,22 @@ const routes: Routes = [
     path: 'user-verification',
     data: { frameless: true },
     component: UserVerificationComponent
+  },
+  {
+    path: 'job',
+    data: { frameless: true },
+    component: JobListComponent
+  },
+  {
+    path: 'job/add',
+    data: { frameless: true, userRoles: [Roles.ADMIN, Roles.COMPANY] },
+    component: JobAddComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'job/edit/:id',
+    data: { frameless: true, userRoles: [] },
+    component: JobEditComponent
   }
 ];
 
