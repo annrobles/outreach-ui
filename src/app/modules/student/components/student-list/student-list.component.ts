@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 import { Student } from '../../../../models/student.model';
 import { StudentService } from '../../../../services/student.service';
-
+import { UserAccessType } from "../../../../models/user-access-type.enum";
+import { AuthService } from '../../../../services/auth.service';
 @UntilDestroy()
 @Component({
   selector: 'student-list',
@@ -18,15 +19,18 @@ export class StudentListComponent implements OnInit, OnDestroy {
   @Input() reorderableColumns: boolean = false;
 
   students:Student[] = []
-
+  userAccessType = UserAccessType;
+  userType: number =  UserAccessType.None;
   loading: boolean = false;
   availability: any[];
 
   constructor(
     private router: Router,
-    private studentSvc: StudentService
+    private studentSvc: StudentService,
+    private authSvc: AuthService,
   ) { 
     this.availability = [{label: "Available", value: 1}, {label: "UnAvailable", value: 0}];
+    this.userType = this.authSvc.user.user_type_id;
   }
 
   ngOnInit(): void {
