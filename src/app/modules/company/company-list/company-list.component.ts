@@ -57,11 +57,13 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     if (this.userType == UserAccessType.Student || this.adminViewingUser) {
       let id = this.adminViewingUser ? this.userId : this.authSvc.user.student.id;
       this.studentSvc.getById(id).subscribe((result) => {
         if (result.status) {
           this.companies = result.student.companies;
+          this.loading = false;
         }
       })
     }
@@ -69,6 +71,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       this.companySvc.getList().subscribe((result) => {
         if (result.status) {
           this.companies = result.company;
+          this.loading = false;
         }
       })
     }

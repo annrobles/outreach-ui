@@ -1,11 +1,12 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd } from '@angular/router';
 
 import { UserAccessType } from "../../../../models/user-access-type.enum";
 import { AuthService } from '../../../../services/auth.service';
 import { StudentService } from "../../../../services/student.service";
 import { MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 @UntilDestroy()
 @Component({
   selector: 'student-view',
@@ -20,7 +21,9 @@ export class StudentViewComponent implements OnInit, OnDestroy {
   showAddCompanyButton: boolean = false;
   userInfo: any;
   availability: any[] = [{"label": "Available", "value": 1}, {"label": "UnAvailable", "value": 0}];
-  
+  breadcrumbs: MenuItem[] = [];
+  isLoading: boolean = true;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -43,8 +46,10 @@ export class StudentViewComponent implements OnInit, OnDestroy {
       this.studentSvc.getById(this.userId).subscribe((result) => {
         if (result.status) {
           this.userInfo = result.student;
+          this.breadcrumbs.push({label: "Student", url: "./student-list"}, {label: this.userInfo.first_name + " " + this.userInfo.last_name});
         }
-      })
+        this.isLoading = false;
+      });
     }
   }
 

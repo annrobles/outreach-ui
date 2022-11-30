@@ -11,11 +11,11 @@ import { MainService } from "./main.service";
 export class AuthService extends MainService {
   endpoint: string;
   user_type: UserAccessType = UserAccessType.None;
-  mainNavItems: {name: string, link: string, active: boolean}[] = [];
+  mainNavItems: {label: string, url: string, active: boolean}[] = [];
   user:any;
   userTypeChange: Subject<number> = new Subject<number>();
-  mainNavItemsChange: Subject<{name: string, link: string, active: boolean}[]>
-  = new Subject<{name: string, link: string, active: boolean}[]>();
+  mainNavItemsChange: Subject<{label: string, url: string, active: boolean}[]>
+  = new Subject<{label: string, url: string, active: boolean}[]>();
 
   constructor(
     http: HttpClient
@@ -43,22 +43,25 @@ export class AuthService extends MainService {
 
     if (this.user_type == UserAccessType.Student) {
       this.mainNavItems = [
-        {name: "User Info", link: "/user-info", active: true},
-        {name: "Company", link: "/company", active: false}
+        {label: "User Info", url: "/user-info", active: true},
+        {label: "Company", url: "/company", active: false},
+        {label: "Sign out", url: "/signin", active: false}
       ];
     }
 
     if (this.user_type == UserAccessType.Admin) {
       this.mainNavItems = [
-        {name: "Candidates", link: "/student-list", active: true},
-        {name: "Company", link: "/company", active: false}
+        {label: "Candidates", url: "/student-list", active: true},
+        {label: "Company", url: "/company", active: false},
+        {label: "Sign out", url: "/signin", active: false}
       ]
     }
 
     if (this.user_type == UserAccessType.Company) {
       this.mainNavItems = [        
-        {name: "Jobs", link: "/job", active: true},
-        {name: "Candidates", link: "/student-list", active: false},
+        {label: "Jobs", url: "/job", active: true},
+        {label: "Candidates", url: "/student-list", active: false},
+        {label: "Sign out", url: "/signin", active: false}
       ]
     }
 

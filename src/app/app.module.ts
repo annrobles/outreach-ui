@@ -18,6 +18,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import { CompanyDetailComponent } from "./modules/company/company-detail/company
 import { CompanyEditComponent } from "./modules/company/company-edit/company-edit.component";
 import { CompanyListComponent } from "./modules/company/company-list/company-list.component";
 import { HeaderComponent } from "./modules/main/components/header/header.component";
+import { FooterComponent } from "./modules/main/components/footer/footer.component";
 import { SigninComponent } from "./modules/main/components/signin/signin.component";
 import { SignupComponent } from './modules/main/components/signup/signup.component';
 import { StudentDetailComponent } from "./modules/student/components/student-detail/student-detail.component";
@@ -69,7 +71,8 @@ import { AuthGuard } from "./core/auth.guard";
     ProgressBarModule,
     TableModule,
     ToastModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    BreadcrumbModule
   ],
   exports: [
     StudentDetailComponent,
@@ -83,6 +86,7 @@ import { AuthGuard } from "./core/auth.guard";
     CompanyDetailComponent,
     CompanyListComponent,
     HeaderComponent,
+    FooterComponent,
     SigninComponent,
     SignupComponent,
     StudentDetailComponent,

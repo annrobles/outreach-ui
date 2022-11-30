@@ -29,6 +29,7 @@ export class JobListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     if (this.authSvc.user) {
       this.userType = this.authSvc.user.user_type_id;
 
@@ -36,6 +37,7 @@ export class JobListComponent implements OnInit, OnDestroy {
         this.jobSvc.getByUserId(this.authSvc.user.id).subscribe((result) => {
           if (result.status) {
             this.jobs = result.user_created_jobs;
+            this.loading = false;
           }
         })
       }
@@ -43,6 +45,7 @@ export class JobListComponent implements OnInit, OnDestroy {
         this.jobSvc.getList().subscribe((result) => {
           if (result.status) {
             this.jobs = result.jobs;
+            this.loading = false;
           }
         })        
       }
@@ -50,6 +53,7 @@ export class JobListComponent implements OnInit, OnDestroy {
       this.jobSvc.getList().subscribe((result) => {
         if (result.status) {
           this.jobs = result.jobs;
+          this.loading = false;
         }
       })
     }
