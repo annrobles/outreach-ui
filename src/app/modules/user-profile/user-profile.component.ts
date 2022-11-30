@@ -66,7 +66,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     if (this.user) {
       this.userBasicInformation = this.user.student;
-      console.log("this.userBasicInformation ", this.userBasicInformation)
       this.studentSvc.getById(this.authSvc.user.student.id).subscribe((result) => {
         if (result.status) {
           this.profileSkills = result.student.skillsets;

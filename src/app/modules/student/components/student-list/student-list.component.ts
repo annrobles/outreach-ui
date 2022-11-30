@@ -34,9 +34,11 @@ export class StudentListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.studentSvc.getList().subscribe((result) => {
       if (result.status) {
         this.students = result.student;
+        this.loading = false;
       }
     });
   }

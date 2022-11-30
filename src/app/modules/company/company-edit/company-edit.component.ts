@@ -1,10 +1,11 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd } from '@angular/router';
 
 import { Company } from '../../../models/company.model';
 import { CompanyService } from '../../../services/company.service';
 import { MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -16,6 +17,7 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
 
   company:Company;
   isLoading: boolean = true;
+  breadcrumbs: MenuItem[] = [];
 
   constructor(
     private router: Router,
@@ -30,11 +32,32 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
         if (result.status) {
           this.company = result.company;
           this.company.source = JSON.parse(result.company.source);
+          this.breadcrumbs.push({label: this.company.name}); 
         }
         this.isLoading = false;
       })
+
+      this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+          // Show progress spinner or progress bar
+        }
+
+        if (event instanceof NavigationEnd) {        
+          let url = event.url.split("/");
+  
+          for (let index = 1; index < url.length; index++) {
+            if (index != url.length-1) {
+              if (index == 1) {
+                this.breadcrumbs.push({label: url[index], url: "./company"});
+              } else {
+                this.breadcrumbs.push({label: url[index]});
+              }              
+            }        
+          }
+        }
+      });
     }
-   }
+  }
 
   ngOnInit(): void {
   }

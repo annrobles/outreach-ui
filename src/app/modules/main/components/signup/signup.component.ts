@@ -30,7 +30,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   ) {
     this.route.queryParams
     .subscribe(params => {
-      console.log(params);
       if (params) {
         this.isEmployer = params["employer"];
       }
@@ -54,6 +53,8 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     if (this.isEmployer) {
       user_type_id = UserAccessType.Company;
+    } else {
+      user_type_id = UserAccessType.Student;
     }
 
     this.signupService.signup({email: this.email, password: this.password, user_type_id: user_type_id}).subscribe(
