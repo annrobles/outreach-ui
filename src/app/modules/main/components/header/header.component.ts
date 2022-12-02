@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userType: number =  UserAccessType.None;
   mainNavItems: {label: string, url: string, active: boolean}[] = [];
   headerVisible: boolean = false;
+  jobPageheaderVisible: boolean = false;
   bannerText: string = "";
 
   constructor(
@@ -47,11 +48,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {    
         if (event.url == "/signin" || event.url == "/signup" || event.url  == "/")  {
           this.headerVisible = false;
+          this.bannerText = "";
+          this.mainNavItems.map((item) => {
+            item.active = event.url  == item.url ? true : false;
+          });
         }
 
-        this.mainNavItems.map((item) => {
-          item.active = event.url  == item.url ? true : false;
-        });
+        if (event.url == "/job" && this.userType == this.userAccessType.None) {
+          this.jobPageheaderVisible = true;
+          this.bannerText = "Career";
+          this.mainNavItems = [
+            {label: "Home", url: "https://appolizer.ca/index.php", active: false},
+            {label: "Career", url: "http://nevisco.ca/outreach/job", active: true},
+            {label: "Workspace", url: "https://appolizer.ca/workspace/index.php", active: false},
+            {label: "Academia", url: "https://appolizer.ca/academia/Courses/index.php", active: false},
+            {label: "Contact", url: "https://appolizer.ca/contact/index.php", active: false}
+          ];
+        }
       }
     });
    }
@@ -60,7 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.bannerText = localStorage.getItem("bannerText") || "";
 
     this.headerVisible = localStorage.getItem("headerVisible") == "true" ? true : false;
-    this.userType = parseInt(localStorage.getItem("userType") || "");
+    this.userType = parseInt(localStorage.getItem("userType") || "0");
 
     let mainNavItems = localStorage.getItem("mainNavItems");
     this.mainNavItems =  mainNavItems ? JSON.parse(mainNavItems) : [];
@@ -70,12 +83,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateTo(route: {label: string, url: string, active: boolean}) {
-    this.router.navigateByUrl(route.url);
-    this.mainNavItems.map((item) => {
-      item.active = route.label == item.label ? true : false;
-      localStorage.setItem("bannerText", route.label);
-      this.bannerText = route.label;
-    })    
+    if (this.jobPageheaderVisible) {
+      window.location.href = route.url;
+    }
+    else {
+      this.router.navigateByUrl(route.url);
+      this.mainNavItems.map((item) => {
+        item.active = route.label == item.label ? true : false;
+        localStorage.setItem("bannerText", route.label);
+        this.bannerText = route.label;
+      })    
+    }
   }
 
   signOut() {

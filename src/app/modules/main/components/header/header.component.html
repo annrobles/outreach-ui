@@ -7,7 +7,7 @@
         </a>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <nav class="main-menu">
+        <nav class="main-menu" *ngIf="headerVisible">
           <ul id="menu-main-menu" class="header-nav clearfix">
             <li [class.active]="item.active"  id="menu-item-16" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-16" *ngFor="let item of mainNavItems">
               <div (click)="navigateTo(item)" *ngIf="item.label != 'Sign out'"><span>{{ item.label | uppercase }}</span></div>
@@ -15,12 +15,19 @@
             </li>
           </ul>
         </nav>
+        <nav class="main-menu" *ngIf="jobPageheaderVisible">
+          <ul id="menu-main-menu" class="header-nav clearfix">
+            <li [class.active]="item.active"  id="menu-item-16" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-16" *ngFor="let item of mainNavItems">
+              <div (click)="navigateTo(item)" *ngIf="item.label != 'Sign out'"><span>{{ item.label }}</span></div>
+            </li>
+          </ul>
+        </nav>        
       </div>
     </div>
   </div>
 </div>
 
-<div class="banner clearfix" style="background-image: url('/dist/views/assets/appolizer-header.jpg');">
+<div class="banner clearfix" [class.job-header]="jobPageheaderVisible" style="background-image: url('/dist/views/assets/appolizer-header.jpg');">
   <div class="container">
     <h2 *ngIf="bannerText == '' && userType == userAccessType.Admin">Candidates</h2>
     <h2 *ngIf="bannerText == '' && userType == userAccessType.Company">Jobs</h2>
@@ -29,3 +36,8 @@
   </div>
 </div>
 
+<div *ngIf="jobPageheaderVisible" [class.job-subheader]="jobPageheaderVisible">
+  <div class="container">
+    <h1>Partner with Ontario Colleges for resourcing Industry Research Projects & US Startups</h1>
+  </div>  
+</div>
