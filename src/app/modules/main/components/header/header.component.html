@@ -29,10 +29,10 @@
 
 <div class="banner clearfix" [class.job-header]="jobPageheaderVisible" style="background-image: url('assets/appolizer-header.jpg');">
   <div class="container">
-    <h2 *ngIf="bannerText == '' && userType == userAccessType.Admin">Candidates</h2>
-    <h2 *ngIf="bannerText == '' && userType == userAccessType.Company">Jobs</h2>
-    <h2 *ngIf="bannerText == '' && userType == userAccessType.Student">User Info</h2>
-    <h2 *ngIf="bannerText != ''">{{ bannerText | uppercase }}</h2>
+    <h2 *ngIf="bannerText == '' && userType == userAccessType.Admin && headerVisible">Candidates</h2>
+    <h2 *ngIf="bannerText == '' && userType == userAccessType.Company && headerVisible">Jobs</h2>
+    <h2 *ngIf="bannerText == '' && userType == userAccessType.Student && headerVisible">User Info</h2>
+    <h2 *ngIf="bannerText != '' && headerVisible">{{ bannerText | uppercase }}</h2>
   </div>
 </div>
 
