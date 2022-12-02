@@ -1,8 +1,8 @@
-<div class="header" *ngIf="headerVisible">
+<div class="header">
   <div class="container">
     <div class="row">
       <div class="logo col-lg-6 col-md-6 col-sm-12">
-        <a href="https://appolizer.ca/career/index.php">
+        <a href="https://appolizer.ca/index.php">
           <img style="width: 200px" src="assets/logo-appolizer.png" alt="Medical Press">
         </a>
       </div>
@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<div class="banner clearfix" *ngIf="headerVisible" style="background-image: url('assets/appolizer-header.jpg');">
+<div class="banner clearfix" style="background-image: url('assets/appolizer-header.jpg');">
   <div class="container">
     <h2 *ngIf="bannerText == '' && userType == userAccessType.Admin">Candidates</h2>
     <h2 *ngIf="bannerText == '' && userType == userAccessType.Company">Jobs</h2>

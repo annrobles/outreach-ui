@@ -1,9 +1,10 @@
-<div class="container">
+<div class="container">  
   <div class="card">
+    <p-progressSpinner *ngIf="isLoading" [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
     <div class="row">
       <div class="col-lg-6 col-md-6">
         <div class="row">
-          <label style="text-align: left;">First Name</label>
+          <label style="text-align: left;">First Name<span class="required">*</span></label>
           <div class="form-floating">
             <input type="text"
               class="form-control"
@@ -11,6 +12,7 @@
               [(ngModel)]="userBasicInformation.first_name"
               name="first_name"
               autocomplete="off">
+              <span class="required" *ngIf="userBasicInformation.first_name == ''">First Name is required.</span>
           </div>
         </div>
         <div class="row">
@@ -28,7 +30,7 @@
       </div>
       <div class="col-lg-6 col-md-6">
         <div class="row">
-          <label style="text-align: left;">Last Name</label>
+          <label style="text-align: left;">Last Name<span class="required">*</span></label>
           <div class="form-floating">
             <input type="text"
               class="form-control"
@@ -36,6 +38,7 @@
               [(ngModel)]="userBasicInformation.last_name"
               name="last_name"
               autocomplete="off">
+              <span class="required" *ngIf="userBasicInformation.last_name == ''">Last Name is required.</span>
           </div>
         </div><div class="row">
           <label style="text-align: left;">Phone</label>
@@ -89,10 +92,10 @@
             </div>
             <div class="col-lg-4 col-md-4 text-center">
               <label style="text-align: left;"># of years experience</label>
-              <p-inputNumber [(ngModel)]="total_years_experience"></p-inputNumber>
+              <p-inputNumber [(ngModel)]="total_years_experience" [disabled]="newSkill == null" [min]="1"></p-inputNumber>
             </div>
             <div class="col-lg-2 col-md-2" style=" position: relative; ">
-              <p-button label="Add" icon="pi pi-plus" styleClass="p-button-sm" (click)="addSkill()"></p-button>
+              <p-button label="Add" icon="pi pi-plus" styleClass="p-button-sm" [disabled]="newSkill == null || total_years_experience == null" (click)="addSkill()"></p-button>
             </div>
           </div>
       
@@ -129,7 +132,13 @@
   
     <div class="row student-detail-container__submit">
       <div class="col-lg-4 col-md-4"></div>
-      <div class="col-lg-4 col-md-4"><button class="w-100 btn btn-lg btn-primary student-detail-container__submit-primary" type="submit" (click)="userProfileSubmit(userBasicInformation)">SUBMIT</button></div>
+      <div class="col-lg-4 col-md-4">
+        <button 
+        class="w-100 btn btn-lg btn-primary student-detail-container__submit-primary" 
+        type="submit" 
+        (click)="userProfileSubmit(userBasicInformation)"
+        [disabled]="userBasicInformation.email == '' || userBasicInformation.last_name == null || userBasicInformation.first_name == null">SUBMIT</button>
+      </div>
       <div class="col-lg-4 col-md-4"></div>
     </div>
   </div>

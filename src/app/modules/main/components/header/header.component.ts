@@ -86,6 +86,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.setItem("user", "");
     localStorage.setItem("bannerText", "");
     this.router.navigateByUrl('/signin');
+    this.mainNavItems = [];
     this.authService.user = null;
     this.bannerText = "";
   }

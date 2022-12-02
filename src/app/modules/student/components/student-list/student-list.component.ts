@@ -6,6 +6,7 @@ import { Student } from '../../../../models/student.model';
 import { StudentService } from '../../../../services/student.service';
 import { UserAccessType } from "../../../../models/user-access-type.enum";
 import { AuthService } from '../../../../services/auth.service';
+import { MessageService } from 'primeng/api';
 @UntilDestroy()
 @Component({
   selector: 'student-list',
@@ -28,6 +29,7 @@ export class StudentListComponent implements OnInit, OnDestroy {
     private router: Router,
     private studentSvc: StudentService,
     private authSvc: AuthService,
+    private messageSvc : MessageService
   ) { 
     this.availability = [{label: "Available", value: 1}, {label: "UnAvailable", value: 0}];
     this.userType = this.authSvc.user.user_type_id;
@@ -39,6 +41,7 @@ export class StudentListComponent implements OnInit, OnDestroy {
       if (result.status) {
         this.students = result.student;
         this.loading = false;
+        console.log("this.students ", this.students)
       }
     });
   }
@@ -56,5 +59,15 @@ export class StudentListComponent implements OnInit, OnDestroy {
 
   getSearchInputValue(event: any){
     return (event.target as HTMLInputElement).value;
+  }
+
+  deleteApplicant(student: Student) {
+    if (student.id) {
+      this.studentSvc.deleteById(student.id).subscribe((result) => {
+        if (result.status) {
+          this.messageSvc.add({severity:'success', summary: result.message});
+        }
+      })
+    }
   }
 }

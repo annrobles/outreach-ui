@@ -22,6 +22,7 @@
             <th scope="col" pSortableColumn="availability">Availability <p-sortIcon field="availability"></p-sortIcon></th>
             <th scope="col" pSortableColumn="rank">Rank <p-sortIcon field="rank"></p-sortIcon></th>
             <th scope="col" pSortableColumn="skills">Skills <p-sortIcon field="skills"></p-sortIcon></th>
+            <th *ngIf="userType == userAccessType.Admin"></th>
           </tr>
             <tr>
                 <th></th>
@@ -46,30 +47,34 @@
                 <th>
                   <p-columnFilter type="text" field="skills"></p-columnFilter>
                 </th>
+                <th *ngIf="userType == userAccessType.Admin"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-student let-index="rowIndex">
-            <tr (click)="viewStudent(student)" [pReorderableRow]="index">
-              <td>
+            <tr [pReorderableRow]="index" *ngIf="student.first_name != null">
+              <td (click)="viewStudent(student)">
                 <span class="pi pi-bars" [pReorderableRowHandle]="index" *ngIf="reorderableColumns"></span>
                 <div style="width: 30px; height: 30px; border-radius: 50%;">
                   <img src="assets/avatar-icon.jpeg" alt="" style="width: 30px; height: 30px; border-radius: 50%;">
                 </div>
               </td>
-              <td>
+              <td (click)="viewStudent(student)">
                 {{ getName(student.first_name, student.last_name) }}
               </td>
-              <td>
+              <td (click)="viewStudent(student)">
                 <span class="image-text">{{ student.email }}</span>
               </td>
-              <td>
+              <td (click)="viewStudent(student)">
                 <span [class]="'image-text student-badge status-' + student.availability">{{ student.availability == 1 ? "AVAILABLE" : "UNAVAILABLE" }}</span>
               </td>
-              <td>
+              <td (click)="viewStudent(student)">
                 <span class="image-text">{{ student.rank }}</span>
               </td>
-              <td>
+              <td (click)="viewStudent(student)">
                 <span class="image-text">{{ student.skills }}</span>
+              </td>
+              <td *ngIf="userType == userAccessType.Admin">
+                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-text" (click)="deleteApplicant(student)"></button>
               </td>
             </tr>
         </ng-template>

@@ -63,6 +63,11 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       this.studentSvc.getById(id).subscribe((result) => {
         if (result.status) {
           this.companies = result.student.companies;
+          this.companies.map((company) => {
+            if (company.student) {
+              company.submittedBy = company.student.first_name + " " + company.student.last_name;
+            }
+          })
           this.loading = false;
         }
       })
@@ -71,6 +76,11 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       this.companySvc.getList().subscribe((result) => {
         if (result.status) {
           this.companies = result.company;
+          this.companies.map((company) => {
+            if (company.student) {
+              company.submittedBy = company.student.first_name + " " + company.student.last_name;
+            }
+          })
           this.loading = false;
         }
       })
