@@ -23,5 +23,9 @@ export class StudentService extends MainService {
   getList() {
     return this.get(`${this.endpoint}`).pipe();
   }
+
+  deleteById(id: number) {
+    return this.delete(`${this.endpoint}/${id}`).pipe();
+}
 }
 

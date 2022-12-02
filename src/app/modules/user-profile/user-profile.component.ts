@@ -38,12 +38,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   newSkill: UserSkill;
   total_years_experience: number | null = null;
-
+  isLoading: boolean = false;
   profileSkills: UserSkill[] = [];
   skillsets: any[] = [];
   availability: any[] = [{"label": "Available", "value": 1}, {"label": "UnAvailable", "value": 0}]
   user: any;
-
+  
   constructor(
     private router: Router,
     private authSvc: AuthService,
@@ -78,6 +78,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   userProfileSubmit(data: any) {
+    this.isLoading = true;
     this.studentSvc.update(this.user.student.id, data).subscribe(
       (result) => {
         if (result.status) {
@@ -85,6 +86,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.userBasicInformation = result.student;
           this.authSvc.user.student = result.student;
           localStorage.setItem("user", `${JSON.stringify(this.authSvc.user)}`);
+          this.isLoading = false;
         }
       },
       (errors) => {
@@ -99,6 +101,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   addSkill() {
+    this.isLoading = true;
     this.profileSkills.push({
       skillset_id: this.newSkill.id,
       name: this.newSkill.name,
@@ -120,16 +123,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           total_years_experience: null
         }
         this.total_years_experience = null;
+        this.isLoading = false;
       }
     });
   }
 
   deleteSkill(profileSkill: UserSkill) {
+    this.isLoading = true;
     if (profileSkill.id) {
       this.studentSkillsetSvc.deleteById(profileSkill.id).subscribe((result) => {
         if (result.status) {
           this.messageService.add({severity:'success', summary: result.message});
           this.profileSkills = this.profileSkills.filter((skill) => skill.id != profileSkill.id);
+          this.isLoading = false;
         }
       })
     }

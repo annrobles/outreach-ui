@@ -1,4 +1,5 @@
 import { Source } from "./user-profile-interface";
+import { Student } from "./student.model";
 
 export interface Company {
   id?: number,
@@ -12,7 +13,9 @@ export interface Company {
   created_at?: Date,
   source: Source,
   other_specify: string,
-  skillsets?: CompanySkillsets[]
+  skillsets?: CompanySkillsets[],
+  submittedBy?: string,
+  student?: Student
 }
 
 export interface CompanySkillsets {
