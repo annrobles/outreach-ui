@@ -35,7 +35,7 @@
     <div *ngFor="let skillset of userInfo.skillsets">
       <div>
         <span>{{ skillset.skill.name }} ({{ skillset.total_years_experience }} {{ skillset.total_years_experience > 1 ? 'yrs' : 'yr' }})</span>
-        <p-progressBar [value]="80" [showValue]="false"></p-progressBar>
+        <p-progressBar [value]="skillset.total_years_experience * 10" [showValue]="false"></p-progressBar>
       </div>
     </div>
   </div>
