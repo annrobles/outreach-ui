@@ -59,6 +59,7 @@ export class SigninComponent implements OnInit, OnDestroy {
           localStorage.setItem("userType", `${result.user.user_type_id}`);
           localStorage.setItem("token", `${result.token}`);
           localStorage.setItem("user", `${JSON.stringify(result.user)}`);
+          localStorage.setItem("username", result.user.email);
           this.authService.user = result.user;
           if (result.user.user_type_id == UserAccessType.Student) {
             this.router.navigateByUrl('/user-info');

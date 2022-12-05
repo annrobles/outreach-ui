@@ -33,4 +33,8 @@ export class JobService extends MainService {
     getById(id: number) {
         return this.get(`${this.endpoint}/${id}`).pipe();
     }
+
+    deleteById(id: number) {
+        return this.delete(`${this.endpoint}/${id}`).pipe();
+    }
 }

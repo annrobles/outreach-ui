@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   password?: string;
   validPassword: boolean = false;
-
+  user_type_id: number = 3;
   email?: string;
   isEmployer: boolean = false;
   loadingOpacity = 0;
@@ -49,15 +49,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   signupClick() {
-    let user_type_id = UserAccessType.Student;
-
-    if (this.isEmployer) {
-      user_type_id = UserAccessType.Company;
-    } else {
-      user_type_id = UserAccessType.Student;
-    }
-
-    this.signupService.signup({email: this.email, password: this.password, user_type_id: user_type_id}).subscribe(
+    this.signupService.signup({email: this.email, password: this.password, user_type_id: this.user_type_id}).subscribe(
       (result) => {
         if (result.status) {
           if (result.status) {

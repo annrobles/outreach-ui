@@ -62,3 +62,25 @@
   color: red;
   font-size: 12px;
 }
+
+
+.user-type-radiobutton {
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
+  text-align: center;
+  .p-field-radiobutton {
+    width: 160px;
+    label {
+      padding-left: 0.5rem;
+    }
+  }
+}
+
+/deep/ .p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: #3398c3;
+  background: #3398c3;
+}

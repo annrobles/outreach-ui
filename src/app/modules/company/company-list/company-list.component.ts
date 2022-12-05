@@ -8,6 +8,7 @@ import { UserAccessType } from "../../../models/user-access-type.enum";
 import { CompanyService } from '../../../services/company.service';
 import { StudentService } from 'src/app/services/student.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -36,7 +37,8 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     private router: Router,
     private companySvc: CompanyService,
     private studentSvc: StudentService,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private messageSvc : MessageService
   ) {
 
     this.userType = this.authSvc.user.user_type_id;
@@ -100,5 +102,16 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   getSearchInputValue(event: any){
     return (event.target as HTMLInputElement).value;
+  }
+
+  deleteCompany(company: Company) {
+    if (company.id) {
+      this.companySvc.deleteById(company.id).subscribe((result) => {
+        if (result.status) {
+          this.companies = this.companies.filter(item => item.id != company.id);
+          this.messageSvc.add({severity:'success', summary: result.message});
+        }
+      })
+    }
   }
 }
