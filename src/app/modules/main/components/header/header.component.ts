@@ -18,10 +18,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   userAccessType = UserAccessType;
   userType: number =  UserAccessType.None;
+  username: string = "";
   mainNavItems: {label: string, url: string, active: boolean}[] = [];
   headerVisible: boolean = false;
   jobPageheaderVisible: boolean = false;
   bannerText: string = "";
+  interval: any;
 
   constructor(
     private router: Router,
@@ -77,6 +79,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     let mainNavItems = localStorage.getItem("mainNavItems");
     this.mainNavItems =  mainNavItems ? JSON.parse(mainNavItems) : [];
+
+    this.interval = setInterval(() => {
+      let username = localStorage.getItem("username");
+      this.username = username ? username : "";
+    },100);
   }
 
   ngOnDestroy(){
@@ -103,10 +110,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.setItem("token", "");
     localStorage.setItem("user", "");
     localStorage.setItem("bannerText", "");
+    localStorage.setItem("username", "");
     this.router.navigateByUrl('/signin');
     this.mainNavItems = [];
     this.authService.user = null;
     this.bannerText = "";
+    this.username = "";
   }
 
 }

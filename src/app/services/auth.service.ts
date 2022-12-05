@@ -13,6 +13,7 @@ export class AuthService extends MainService {
   user_type: UserAccessType = UserAccessType.None;
   mainNavItems: {label: string, url: string, active: boolean}[] = [];
   user:any;
+  username: string;
   userTypeChange: Subject<number> = new Subject<number>();
   mainNavItemsChange: Subject<{label: string, url: string, active: boolean}[]>
   = new Subject<{label: string, url: string, active: boolean}[]>();
@@ -72,7 +73,6 @@ export class AuthService extends MainService {
   getUserType() {
     return this.user_type;
   }
-
 
   getUserRole(): string {
     let userType = localStorage.getItem('userType')

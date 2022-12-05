@@ -50,8 +50,8 @@ nav.main-menu ul {
       color: #60646d;
     }
 
-    &.active,
-    &:hover {
+    &:not(.menu-item-username).active,
+    &:not(.menu-item-username):hover {
       background-color: #3b77af;
       cursor: pointer;
       color: #ffffff;
@@ -96,4 +96,8 @@ nav.main-menu ul {
       text-align: left;
     }
   }
+}
+
+.menu-item-signout span {
+  font-size: 14px;
 }

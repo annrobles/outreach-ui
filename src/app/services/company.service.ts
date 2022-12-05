@@ -32,4 +32,8 @@ export class CompanyService extends MainService {
   addSkillsetNeed(payload: any) {
     return this.post(`api/skillsetNeed`, payload).pipe();
   }
+
+  deleteById(id: number) {
+    return this.delete(`${this.endpoint}/${id}`).pipe();
+  }
 }
