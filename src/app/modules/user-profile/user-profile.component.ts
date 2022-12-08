@@ -69,13 +69,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       if (result.status) {
         this.skillsets = result.skillset;
       }
-    })
+    });
 
     this.collegeSvc.getList().subscribe((result) => {
       if (result.status) {
         this.college = result.college;
       }
-    })
+    });
 
     if (this.user) {
       this.userBasicInformation = this.user.student;

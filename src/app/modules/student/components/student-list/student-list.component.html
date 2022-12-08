@@ -20,7 +20,7 @@
             <th scope="col" pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
             <th scope="col" pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
             <th scope="col" pSortableColumn="availability">Availability <p-sortIcon field="availability"></p-sortIcon></th>
-            <th scope="col" pSortableColumn="college_id">Campus <p-sortIcon field="college_id"></p-sortIcon></th>
+            <th scope="col" pSortableColumn="college_id">College <p-sortIcon field="college_id"></p-sortIcon></th>
             <th scope="col" pSortableColumn="international">Type <p-sortIcon field="international"></p-sortIcon></th>
             <th scope="col" pSortableColumn="rank">Rank <p-sortIcon field="rank"></p-sortIcon></th>
             <th scope="col" pSortableColumn="completeSkills">Skills <p-sortIcon field="completeSkills"></p-sortIcon></th>
@@ -48,9 +48,9 @@
                 <th>
                   <p-columnFilter field="college_id" matchMode="equals" [showMenu]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                          <p-dropdown [ngModel]="value" [options]="campus" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
+                          <p-dropdown [ngModel]="value" [options]="college" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
                               <ng-template let-option pTemplate="item">
-                                  <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                                  <span [class]="'customer-badge status-' + option.id">{{option.name}}</span>
                               </ng-template>
                           </p-dropdown>
                       </ng-template>
