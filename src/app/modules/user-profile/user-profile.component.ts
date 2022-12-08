@@ -2,12 +2,14 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { College } from "../../models/college.model";
 import { UserProfileInfoType } from "../../models/user-profile-info-type.enum";
 import { UserBasicInformation,
   Skill,
   UserSkill } from "../../models/user-profile-interface";
 
 import { AuthService } from '../../services/auth.service';
+import { CollegeService } from "../../services/college.service";
 import { StudentService } from "../../services/student.service";
 import { SkillsetService } from "../../services/skillset.service";
 import { StudentSkillsetService } from "../../services/student-skillset.service";
@@ -35,8 +37,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     user_id: 0,
     availability: false,
     international: undefined,
-    campus_id: undefined,
-    campus_other: ""
+    college_id: undefined,
+    college_other: ""
   };
 
   newSkill: UserSkill;
@@ -45,12 +47,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   profileSkills: UserSkill[] = [];
   skillsets: any[] = [];
   availability: any[] = [{"label": "Available", "value": 1}, {"label": "UnAvailable", "value": 0}]
-  campus: any[] = [
-    {"label": "Mississauga", "value": 1},
-    {"label": "Sarnia", "value": 2},
-    {"label": "Toronto", "value": 3},
-    {"label": "Other", "value": 4}
-  ]
+  college: College[] = [];
   user: any;
   
   constructor(
@@ -59,7 +56,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private studentSvc: StudentService,
     private messageService: MessageService,
     private skillsetSvc: SkillsetService,
-    private studentSkillsetSvc: StudentSkillsetService
+    private studentSkillsetSvc: StudentSkillsetService,
+    private collegeSvc: CollegeService
   ) {
     this.currentRouteUrl = router.url;    
    }
@@ -70,6 +68,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.skillsetSvc.getList().subscribe((result) => {
       if (result.status) {
         this.skillsets = result.skillset;
+      }
+    })
+
+    this.collegeSvc.getList().subscribe((result) => {
+      if (result.status) {
+        this.college = result.college;
       }
     })
 

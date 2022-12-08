@@ -9,8 +9,8 @@ export interface UserBasicInformation {
   about: string,
   availability: boolean,
   international?: number,
-  campus_id?: number,
-  campus_other?:string
+  college_id?: number,
+  college_other?:string
 }
 
 export interface Source {

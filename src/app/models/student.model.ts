@@ -13,7 +13,7 @@ export interface Student {
   rank?: number,
   source: Source,
   completeSkills?: string,
-  campus_id?: number,
-  campus_other?: string,
+  college_id?: number,
+  college_other?: string,
   international?: number
 }

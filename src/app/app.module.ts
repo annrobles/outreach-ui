@@ -53,6 +53,7 @@ import { StudentSkillsetService } from './services/student-skillset.service';
 import { CompanySkillsetService } from "./services/company-skillset.service";
 import { JobService } from './services/job.service';
 import { EmployeeService } from './services/employee.service';
+import { CollegeService } from './services/college.service';
 import { AuthGuard } from "./core/auth.guard";
 @NgModule({
   imports: [
@@ -116,7 +117,8 @@ import { AuthGuard } from "./core/auth.guard";
     StudentSkillsetService,
     CompanySkillsetService,
     JobService,
-    EmployeeService
+    EmployeeService,
+    CollegeService
   ],
   bootstrap: [AppComponent]
 })

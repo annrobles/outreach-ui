@@ -24,6 +24,8 @@ export class StudentListComponent implements OnInit, OnDestroy {
   userType: number =  UserAccessType.None;
   loading: boolean = false;
   availability: any[];
+  campus: any[];
+  studentType: any[];
 
   constructor(
     private router: Router,
@@ -32,6 +34,13 @@ export class StudentListComponent implements OnInit, OnDestroy {
     private messageSvc : MessageService
   ) { 
     this.availability = [{label: "Available", value: 1}, {label: "UnAvailable", value: 0}];
+    this.campus = [
+      {"label": "Mississauga", "value": 1},
+      {"label": "Sarnia", "value": 2},
+      {"label": "Toronto", "value": 3},
+      {"label": "Other", "value": 4}
+    ];
+    this.studentType = [{label: "Domestic", value: 0}, {label: "International", value: 1}];
     this.userType = this.authSvc.user.user_type_id;
   }
 
