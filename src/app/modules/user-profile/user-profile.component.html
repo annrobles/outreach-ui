@@ -123,9 +123,51 @@
 
     <div class="student-view-container student-view-addition-info mt-0 mb-6">
       <div class="col-lg-6 col-md-6" style="text-align: left;">
+        <label>Are you an international student?</label>
+        <div class="row app-radiobutton mt-2 mb-4">
+          <div class="p-field-radiobutton">
+            <p-radioButton
+              name="user_type_id"
+              value=1
+              [(ngModel)]="userBasicInformation.international"
+              inputId="city1"
+            ></p-radioButton>
+            <label for="city1">Yes</label>
+          </div>
+          <div class="p-field-radiobutton">
+            <p-radioButton
+              name="user_type_id"
+              value=2
+              [(ngModel)]="userBasicInformation.international"
+              inputId="city2"
+            ></p-radioButton>
+            <label for="city2">No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6" style="text-align: left;">
+        <label>Campus</label>
+        <div class="form-floating">
+          <p-dropdown [options]="campus" placeholder="Select a campus" [(ngModel)]="userBasicInformation.campus_id" optionLabel="label" optionValue="value"></p-dropdown>
+          <div class="row" style="text-align: left; margin-top: 0.5rem; margin-left: 3rem;" *ngIf="userBasicInformation.campus_id == 4">
+            <label style="text-align: left;">Specify:</label>
+            <div class="form-floating">
+              <input type="text"
+                class="form-control"
+                id="floatingInput"
+                [(ngModel)]="userBasicInformation.campus_other"
+                name="campus_other"
+                autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6" style="text-align: left; margin-top: 2rem;">
         <label>Availability</label>
         <div class="form-floating">
-          <p-dropdown [options]="availability" [(ngModel)]="userBasicInformation.availability" optionLabel="label" optionValue="value"></p-dropdown>
+          <p-dropdown [options]="availability" placeholder="Select a availability" [(ngModel)]="userBasicInformation.availability" optionLabel="label" optionValue="value"></p-dropdown>
         </div>
       </div>
     </div>

@@ -33,7 +33,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     link: "",
     about: "",
     user_id: 0,
-    availability: false
+    availability: false,
+    international: undefined,
+    campus_id: undefined,
+    campus_other: ""
   };
 
   newSkill: UserSkill;
@@ -42,6 +45,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   profileSkills: UserSkill[] = [];
   skillsets: any[] = [];
   availability: any[] = [{"label": "Available", "value": 1}, {"label": "UnAvailable", "value": 0}]
+  campus: any[] = [
+    {"label": "Mississauga", "value": 1},
+    {"label": "Sarnia", "value": 2},
+    {"label": "Toronto", "value": 3},
+    {"label": "Other", "value": 4}
+  ]
   user: any;
   
   constructor(
@@ -79,6 +88,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   userProfileSubmit(data: any) {
     this.isLoading = true;
+    data.international = parseInt(data.international);
     this.studentSvc.update(this.user.student.id, data).subscribe(
       (result) => {
         if (result.status) {
