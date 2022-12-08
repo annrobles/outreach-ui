@@ -208,6 +208,7 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
   text-align: left;
 }
 
+.badge,
 .student-badge {
   border-radius: 2px;
   padding: .25em .5rem;
@@ -217,11 +218,13 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
   letter-spacing: .3px
 }
 
+.badge.status-1,
 .student-badge.status-1 {
   background-color: #c8e6c9;
   color: #256029
 }
 
+.badge.status-0,
 .student-badge.status-0 {
   background-color: #ffcdd2;
   color: #c63737
@@ -244,5 +247,23 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
   .container {
     margin-top: 0;
     margin-bottom: 0;
+  }
+}
+
+.student-detail-container_add{
+  border-color: #4DA5CB;
+  background-color: #4DA5CB;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    background-color: #007EB4;
+    border-color: #007EB4;
+  }
+}
+
+.student-detail-container_add {
+  i {
+    font-size: 1.8rem;
   }
 }

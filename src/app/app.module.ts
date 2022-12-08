@@ -40,6 +40,7 @@ import { JobAddComponent } from './modules/job/job-add/job-add.component';
 import { JobDetailComponent } from './modules/job/job-detail/job-detail.component';
 import { JobEditComponent } from './modules/job/job-edit/job-edit.component';
 import { JobListComponent } from './modules/job/job-list/job-list.component';
+import { EmployeeListComponent } from './modules/employee/employee-list/employee-list.component';
 
 import { AuthService } from './services/auth.service';
 import { CompanyService } from "./services/company.service";
@@ -50,7 +51,8 @@ import { SkillsetService } from "./services/skillset.service";
 import { StudentService } from './services/student.service';
 import { StudentSkillsetService } from './services/student-skillset.service';
 import { CompanySkillsetService } from "./services/company-skillset.service";
-import { JobService } from './services/job.service'; "";
+import { JobService } from './services/job.service';
+import { EmployeeService } from './services/employee.service';
 import { AuthGuard } from "./core/auth.guard";
 @NgModule({
   imports: [
@@ -99,7 +101,8 @@ import { AuthGuard } from "./core/auth.guard";
     JobDetailComponent,
     JobAddComponent,
     JobEditComponent,
-    JobListComponent
+    JobListComponent,
+    EmployeeListComponent
   ],
   providers: [
     AuthGuard,
@@ -112,7 +115,8 @@ import { AuthGuard } from "./core/auth.guard";
     StudentService,
     StudentSkillsetService,
     CompanySkillsetService,
-    JobService
+    JobService,
+    EmployeeService
   ],
   bootstrap: [AppComponent]
 })

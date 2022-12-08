@@ -45,7 +45,7 @@ export class AuthService extends MainService {
     if (this.user_type == UserAccessType.Student) {
       this.mainNavItems = [
         {label: "User Info", url: "/user-info", active: true},
-        {label: "Company", url: "/company", active: false},
+        {label: "Companies", url: "/company", active: false},
         {label: "Sign out", url: "/signin", active: false}
       ];
     }
@@ -53,7 +53,8 @@ export class AuthService extends MainService {
     if (this.user_type == UserAccessType.Admin) {
       this.mainNavItems = [
         {label: "Candidates", url: "/student-list", active: true},
-        {label: "Company", url: "/company", active: false},
+        {label: "Companies", url: "/company", active: false},
+        {label: "Employees", url: "/employee", active: false},
         {label: "Sign out", url: "/signin", active: false}
       ]
     }
