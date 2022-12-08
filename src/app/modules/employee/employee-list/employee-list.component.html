@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="card">
+      <p-table #dt2 [value]="employees" dataKey="id"
+          [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['email','enable']">
+          <ng-template pTemplate="caption">
+              <div class="flex">
+                  <span>
+                    List of Employees
+                  </span>
+                  <span class="p-input-icon-left ml-auto">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (input)="dt2.filterGlobal(getSearchInputValue($event), 'contains')" placeholder="Search keyword" class="p-inputtext p-component p-element"/>
+                  </span>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th scope="col" pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+              <th colspan="2">
+                <p-columnFilter field="enable" matchMode="equals" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="enable" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
+                            <ng-template let-option pTemplate="item">
+                                <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+              </th>
+            </tr>
+              <tr>
+                  <th>
+                      <p-columnFilter type="text" field="email"></p-columnFilter>
+                  </th>
+                  <th scope="col" pSortableColumn="enable" colspan="2">STATUS <p-sortIcon field="enable"></p-sortIcon></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-employee let-i="rowIndex">
+              <tr *ngIf="employee.user_type_id == userAccessType.Company">
+                <td (click)="viewEmployee()">
+                  {{ employee.email }}
+                </td>
+                <td (click)="viewEmployee()">
+                    <span [class]="'image-text badge status-' + employee.enable">{{ employee.enable == 1 ? "ENABLE" : "DISABLE" }}</span>
+                </td>
+                <td *ngIf="employee.enable == 1">
+                    <button class="w-30 btn btn-sm btn-primary student-detail-container_add" type="submit" (click)="disableEmployee(employee, i)">
+                        <span>MARK AS DISABLE</span>
+                    </button>
+                </td>
+                <td *ngIf="employee.enable == 0">
+                    <button class="w-30 btn btn-sm btn-primary student-detail-container_add" type="submit" (click)="enableEmployee(employee, i)">
+                        <span>MARK AS ENABLE</span>
+                    </button>
+                </td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="5">No employees found.</td>
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+  </div>
+  
