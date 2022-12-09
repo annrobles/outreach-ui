@@ -44,10 +44,12 @@ export class StudentListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    let students:Student[] = [];
     this.loading = true;
     this.studentSvc.getList().subscribe((result) => {
       if (result.status) {
-        this.students = result.student;
+        students = result.student;
+        this.students = students.filter((item) => item.first_name != null);
         this.loading = false;
       }
     });
