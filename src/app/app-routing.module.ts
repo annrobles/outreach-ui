@@ -18,6 +18,7 @@ import { JobDetailComponent } from './modules/job/job-detail/job-detail.componen
 import { JobEditComponent } from './modules/job/job-edit/job-edit.component';
 import { JobListComponent } from './modules/job/job-list/job-list.component';
 import { EmployeeListComponent } from './modules/employee/employee-list/employee-list.component';
+import { PasswordComponent } from './modules/main/components/password/password.component';
 import { Roles } from './models/user-access-type.enum';
 
 const routes: Routes = [
@@ -103,6 +104,12 @@ const routes: Routes = [
     path: 'employee',
     data: { frameless: true, userRoles: [Roles.ADMIN] },
     component: EmployeeListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'update-password',
+    data: { frameless: true, userRoles: [] },
+    component: PasswordComponent,
     canActivate: [AuthGuard]
   },
 ];

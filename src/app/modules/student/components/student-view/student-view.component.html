@@ -44,15 +44,15 @@
 <div class="student-view-container student-view-addition-info mt-0 mb-6">
   <div class="col-lg-6 col-md-6 col-sm-12">
     <h5>Is international student?</h5>
-    <div class="row app-radiobutton mt-2 mb-4">
-      {{ userInfo.international }}
+    <div class="row app-radiobutton mt-2 mb-4" style="margin-left: 0.3rem">
+      {{ userInfo.international == 1 ? "International" : "Domestic" }}
     </div>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-12">
     <h5>College</h5>
     <div class="row app-radiobutton mt-2 mb-4">
-      <span>{{ userInfo.college_id }}</span>
-      <span *ngIf="userInfo.college_id == 99">: {{ userInfo.college_other }}</span>
+      <span>{{ userInfo.college.name }}</span>
+      <span *ngIf="userInfo.college_id == 999">: {{ userInfo.college_other }}</span>
     </div>
   </div>
 </div>

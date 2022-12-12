@@ -1,6 +1,7 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 import { UserAccessType } from "../../../../models/user-access-type.enum";
 
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   jobPageheaderVisible: boolean = false;
   bannerText: string = "";
   interval: any;
+  items: MenuItem[];
 
   constructor(
     private router: Router,
@@ -69,6 +71,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     });
+
+    this.items = [{
+      label: 'Settings',
+      items: [{
+        label: 'Update Password',
+        command: () => {
+          this.updatePassword();
+        }
+      }
+      ]}
+  ];
    }
 
   ngOnInit(): void {
@@ -118,4 +131,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.username = "";
   }
 
+  updatePassword() {
+    this.router.navigateByUrl('/update-password');
+    localStorage.setItem("bannerText", "Update Password");
+  }
 }

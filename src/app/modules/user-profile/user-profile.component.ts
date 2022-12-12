@@ -73,7 +73,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.collegeSvc.getList().subscribe((result) => {
       if (result.status) {
-        this.college = result.college;
+        this.college = result.colleges;
       }
     });
 

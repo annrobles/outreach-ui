@@ -28,7 +28,7 @@ export class StudentListComponent implements OnInit, OnDestroy {
   availability: any[];
   campus: any[];
   studentType: any[];
-  college: College[] = [];
+  colleges: {label: string, value: number}[] = [];
 
   constructor(
     private router: Router,
@@ -56,7 +56,13 @@ export class StudentListComponent implements OnInit, OnDestroy {
 
     this.collegeSvc.getList().subscribe((result) => {
       if (result.status) {
-        this.college = result.college;
+        let colleges: College[] = result.colleges;
+
+        colleges.forEach((college) => {
+          if (college.name && college.id) {
+            this.colleges.push({"label": college.name, "value": college.id});
+          }          
+        });
       }
     });
   }
