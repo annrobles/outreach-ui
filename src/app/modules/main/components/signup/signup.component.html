@@ -1,11 +1,16 @@
 <main class="form-signin mt-5 w-100 m-auto">
   <form>
     <h1 class="h3 mb-3 fw-normal">Create an account</h1>
-    <!-- <button class="w-100 btn btn-lg btn-light" (click)="signupClick()">
-      <img src="/dist/views/assets/icon-google.png" alt="Google icon">
-      Continue with Google
-    </button>
-    <span class="signin--text_label">or</span> -->
+    <div class="form-floating mb-3">
+      <input type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Name"
+        [(ngModel)]="name"
+        name="name"
+        autocomplete="off">
+      <label for="floatingInput">Name</label>
+    </div>
     <div class="form-floating">
       <input type="email"
         class="form-control"
@@ -16,24 +21,8 @@
         autocomplete="off">
       <label for="floatingInput">Email address</label>
     </div>
-    <div class="form-floating">
-      <input type="password"
-        class="form-control"
-        id="floatingPasswor"
-        placeholder="Password"
-        [(ngModel)]="password"
-        name="password"
-        #newPass="ngModel"
-        (ngModelChange)="validatePassword()"
-        (blur)="validatePassword()"
-        autocomplete="off">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class="password--error">
-      <small *ngIf="!validPassword && newPass.dirty"><i>At least: 7 characters<br>1 lower, 1 upper, and 1 number or special</i></small>
-    </div>
     
-    <div class="row user-type-radiobutton mt-4">
+    <div class="row app-radiobutton mt-4">
       <div class="p-field-radiobutton">
         <p-radioButton
           name="user_type_id"

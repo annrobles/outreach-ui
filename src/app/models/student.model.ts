@@ -12,5 +12,8 @@ export interface Student {
   student_skillset_id?: string,
   rank?: number,
   source: Source,
-  completeSkills?: string
+  completeSkills?: string,
+  college_id?: number,
+  college_other?: string,
+  international?: number
 }

@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -31,6 +32,7 @@ import { HeaderComponent } from "./modules/main/components/header/header.compone
 import { FooterComponent } from "./modules/main/components/footer/footer.component";
 import { SigninComponent } from "./modules/main/components/signin/signin.component";
 import { SignupComponent } from './modules/main/components/signup/signup.component';
+import { PasswordComponent } from './modules/main/components/password/password.component';
 import { StudentDetailComponent } from "./modules/student/components/student-detail/student-detail.component";
 import { StudentListComponent } from "./modules/student/components/student-list/student-list.component";
 import { StudentViewComponent } from "./modules/student/components/student-view/student-view.component";
@@ -53,6 +55,8 @@ import { StudentSkillsetService } from './services/student-skillset.service';
 import { CompanySkillsetService } from "./services/company-skillset.service";
 import { JobService } from './services/job.service';
 import { EmployeeService } from './services/employee.service';
+import { CollegeService } from './services/college.service';
+import { UserService } from './services/user.service';
 import { AuthGuard } from "./core/auth.guard";
 @NgModule({
   imports: [
@@ -67,6 +71,7 @@ import { AuthGuard } from "./core/auth.guard";
     DropdownModule,
     EditorModule,
     InputNumberModule,
+    MenuModule,
     MenubarModule,
     MessageModule,
     MessagesModule,
@@ -93,6 +98,7 @@ import { AuthGuard } from "./core/auth.guard";
     FooterComponent,
     SigninComponent,
     SignupComponent,
+    PasswordComponent,
     StudentDetailComponent,
     StudentListComponent,
     StudentViewComponent,
@@ -116,7 +122,9 @@ import { AuthGuard } from "./core/auth.guard";
     StudentSkillsetService,
     CompanySkillsetService,
     JobService,
-    EmployeeService
+    EmployeeService,
+    CollegeService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

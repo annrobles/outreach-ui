@@ -32,13 +32,15 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    let users: Employee[] = [];
     this.loading = true;
     if (this.authSvc.user) {
       this.userType = this.authSvc.user.user_type_id;
 
       this.employeeSvc.getList().subscribe((result) => {
         if (result.status) {
-          this.employees = result.users;
+          users = result.users;
+          this.employees = users.filter((item) => item.user_type_id == this.userAccessType.Company);
           this.loading = false;
         }
       })  

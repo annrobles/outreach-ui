@@ -14,7 +14,11 @@
               <div (click)="signOut()" *ngIf="item.label == 'Sign out'"><span>{{ item.label | uppercase }}</span></div>
             </li>
             <li class="menu-item-username" *ngIf="username">
-              <div><span>{{ username }}</span></div>
+              <div>
+                <span class="menu-item-username__text" (click)="menu.toggle($event)">{{ username }}</span>
+                <!-- <button type="button" pButton pRipple icon="pi pi-bars" label="Show" (click)="menu.toggle($event)"></button> -->
+                <p-menu #menu [popup]="true" [model]="items"></p-menu>
+              </div>
             </li>
           </ul>
         </nav>

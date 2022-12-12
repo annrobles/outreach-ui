@@ -7,7 +7,10 @@ export interface UserBasicInformation {
   contact_number: string,
   link: string,
   about: string,
-  availability: boolean
+  availability: boolean,
+  international?: number,
+  college_id?: number,
+  college_other?:string
 }
 
 export interface Source {

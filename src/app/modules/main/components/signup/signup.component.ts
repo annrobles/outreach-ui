@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SignupComponent implements OnInit, OnDestroy {
 
-  password?: string;
+  name?: string;
   validPassword: boolean = false;
   user_type_id: number = 3;
   email?: string;
@@ -49,7 +49,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   signupClick() {
-    this.signupService.signup({email: this.email, password: this.password, user_type_id: this.user_type_id}).subscribe(
+    this.signupService.signup({email: this.email, name: this.name, user_type_id: this.user_type_id}).subscribe(
       (result) => {
         if (result.status) {
           if (result.status) {

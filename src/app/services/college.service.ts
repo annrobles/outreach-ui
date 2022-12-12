@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { MainService } from "./main.service";
 
 @Injectable()
-export class UserService extends MainService {
+export class CollegeService extends MainService {
   endpoint: string;
 
   constructor(
     http: HttpClient) {
         super(http);
-        this.endpoint = 'api/user';
+        this.endpoint = 'api/college';
     }
 
-  update(id: number, payload: any) {
-    return this.put(`${this.endpoint}/${id}`, payload).pipe();
-  }
+    getList() {
+        return this.get(`${this.endpoint}`).pipe();
+    }
 }
