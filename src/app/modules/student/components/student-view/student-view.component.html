@@ -51,8 +51,8 @@
   <div class="col-lg-6 col-md-6 col-sm-12">
     <h5>College</h5>
     <div class="row app-radiobutton mt-2 mb-4">
-      <span>{{ userInfo.college.name }}</span>
-      <span *ngIf="userInfo.college_id == 999">: {{ userInfo.college_other }}</span>
+      <span>{{ userInfo?.college?.name }}</span>
+      <span *ngIf="userInfo?.college_id == 999">: {{ userInfo?.college_other }}</span>
     </div>
   </div>
 </div>
