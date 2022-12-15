@@ -1,6 +1,9 @@
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { Company } from '../../../models/company.model';
 import { CompanyStatus } from '../../../models/company-status.enum';
@@ -106,12 +109,20 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   deleteCompany(company: Company) {
     if (company.id) {
-      this.companySvc.deleteById(company.id).subscribe((result) => {
+
+      this.companySvc.deleteById(company.id).pipe(
+        untilDestroyed(this),
+        catchError(err => {
+          this.messageSvc.add({severity:'error', summary: err.error.message});
+          return throwError(err)
+        })
+      ).subscribe((result) => {
         if (result.status) {
           this.companies = this.companies.filter(item => item.id != company.id);
           this.messageSvc.add({severity:'success', summary: result.message});
         }
-      })
+      });
+
     }
   }
 }

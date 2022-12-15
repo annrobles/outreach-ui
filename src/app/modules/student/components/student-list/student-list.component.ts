@@ -1,6 +1,9 @@
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { College } from "../../../../models/college.model";
 import { Student } from '../../../../models/student.model';
@@ -84,11 +87,20 @@ export class StudentListComponent implements OnInit, OnDestroy {
 
   deleteApplicant(student: Student) {
     if (student.id) {
-      this.studentSvc.deleteById(student.id).subscribe((result) => {
+
+      this.studentSvc.deleteById(student.id).pipe(
+        untilDestroyed(this),
+        catchError(err => {
+          this.messageSvc.add({severity:'error', summary: err.error.message});
+          return throwError(err)
+        })
+      ).subscribe((result) => {
         if (result.status) {
+          this.students = this.students.filter(item => item.id != student.id);
           this.messageSvc.add({severity:'success', summary: result.message});
         }
-      })
+      });
+
     }
   }
 }
