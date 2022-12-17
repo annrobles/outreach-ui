@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.bannerText = "Career";
           this.mainNavItems = [
             {label: "Home", url: "https://appolizer.ca/index.php", active: false},
-            {label: "Career", url: "http://nevisco.ca/outreach/job", active: true},
+            {label: "Career", url: "https://nevisco.ca/outreach/job", active: true},
             {label: "Workspace", url: "https://appolizer.ca/workspace/index.php", active: false},
             {label: "Academia", url: "https://appolizer.ca/academia/Courses/index.php", active: false},
             {label: "Contact", url: "https://appolizer.ca/contact/index.php", active: false}
