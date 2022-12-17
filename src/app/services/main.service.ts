@@ -11,7 +11,7 @@ export abstract class MainService {
   getAPIBase(route: string = ''): string {
 
     //let serverLink: ServerLink = {url: "http://127.0.0.1:8000/"};
-    let serverLink: ServerLink = {url: "http://nevisco.ca/"};
+    let serverLink: ServerLink = {url: "https://nevisco.ca/"};
 
     if (serverLink != null) {
       return serverLink.url + route;
