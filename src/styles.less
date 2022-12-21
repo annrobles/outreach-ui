@@ -182,11 +182,6 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
   color: #00587E;
 }
 
-
-
-
-
-
 .p-toast-message-text {
   text-align: left;
 }
@@ -295,4 +290,19 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 
 /deep/ .p-menu .p-menuitem-link:not(.p-disabled):hover {
   background: #99CBE1;
+}
+
+.company-add-button {
+  text-align: right;
+  button {
+    border-color: #4DA5CB;
+    background-color: #4DA5CB;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      background-color: #007EB4;
+      border-color: #007EB4;
+    }
+  }
 }

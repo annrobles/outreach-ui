@@ -43,6 +43,7 @@ import { JobDetailComponent } from './modules/job/job-detail/job-detail.componen
 import { JobEditComponent } from './modules/job/job-edit/job-edit.component';
 import { JobListComponent } from './modules/job/job-list/job-list.component';
 import { EmployeeListComponent } from './modules/employee/employee-list/employee-list.component';
+import { ShortListComponent } from "./modules/student/components/short-list/short-list.component";
 
 import { AuthService } from './services/auth.service';
 import { CompanyService } from "./services/company.service";
@@ -108,7 +109,8 @@ import { AuthGuard } from "./core/auth.guard";
     JobAddComponent,
     JobEditComponent,
     JobListComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    ShortListComponent
   ],
   providers: [
     AuthGuard,
