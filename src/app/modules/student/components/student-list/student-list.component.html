@@ -1,9 +1,17 @@
 <div [class]="containerClass">
+  <div class="row company-add-button mb-3" *ngIf="userType == userAccessType.Company">
+    <div class="form-floating">
+      <button class="w-30 btn btn-sm btn-primary student-detail-container_add" type="submit">
+        <span>Done - Submit Short List</span>
+      </button>
+    </div>
+  </div>
+
   <div class="card">
-    <p-table #dt2 [value]="students" dataKey="id"
+    <p-table #dt2 [value]="students" dataKey="id" [(selection)]="selectedStudents"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['name','email','availability', 'college_id', 'international', 'completeSkills']"
+        [globalFilterFields]="['name','email','availability', 'college_id', 'international', 'completeSkills','enable']"
         [reorderableColumns]="reorderableColumns">
         <ng-template pTemplate="caption">
             <div class="flex">
@@ -16,6 +24,7 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
+            <th style="width: 3rem" *ngIf="userType == userAccessType.Company"></th>
             <th></th>
             <th scope="col" pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
             <th scope="col" pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
@@ -24,9 +33,11 @@
             <th scope="col" pSortableColumn="international">Type <p-sortIcon field="international"></p-sortIcon></th>
             <th scope="col" pSortableColumn="rank">Rank <p-sortIcon field="rank"></p-sortIcon></th>
             <th scope="col" pSortableColumn="completeSkills">Skills <p-sortIcon field="completeSkills"></p-sortIcon></th>
+            <th scope="col" pSortableColumn="enable" colspan="2" *ngIf="userType == userAccessType.Admin">STATUS <p-sortIcon field="enable"></p-sortIcon></th>
             <th *ngIf="userType == userAccessType.Admin"></th>
           </tr>
             <tr>
+                <th style="width: 3rem" *ngIf="userType == userAccessType.Company"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
                 <th></th>
                 <th>
                     <p-columnFilter type="text" field="name"></p-columnFilter>
@@ -71,11 +82,25 @@
                 <th>
                   <p-columnFilter type="text" field="completeSkills"></p-columnFilter>
                 </th>
+                <th colspan="2" *ngIf="userType == userAccessType.Admin">
+                  <p-columnFilter field="enable" matchMode="equals" [showMenu]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown [ngModel]="value" [options]="enable" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
+                              <ng-template let-option pTemplate="item">
+                                  <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                              </ng-template>
+                          </p-dropdown>
+                      </ng-template>
+                  </p-columnFilter>
+                </th>  
                 <th *ngIf="userType == userAccessType.Admin"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-student let-index="rowIndex">
-            <tr [pReorderableRow]="index" *ngIf="student.first_name != null">
+            <tr [pReorderableRow]="index" *ngIf="student.first_name != null" class="p-selectable-row">
+              <td *ngIf="userType == userAccessType.Company" style="padding: 1rem 1rem;">
+                <p-tableCheckbox [value]="student"></p-tableCheckbox>
+              </td>
               <td (click)="viewStudent(student)">
                 <span class="pi pi-bars" [pReorderableRowHandle]="index" *ngIf="reorderableColumns"></span>
                 <div style="width: 30px; height: 30px; border-radius: 50%;">
@@ -103,6 +128,19 @@
               <td (click)="viewStudent(student)">
                 <span class="image-text">{{ student.completeSkills }}</span>
               </td>
+              <td (click)="viewStudent(student)" *ngIf="userType == userAccessType.Admin">
+                <span [class]="'image-text badge status-' + (student.enable == 0 ? 0 : 1)">{{ student.enable == 0 ? "DISABLE" : "ENABLE" }}</span>
+              </td>
+              <td *ngIf="userType == userAccessType.Admin">
+                  <button class="w-30 btn btn-sm btn-primary student-detail-container_add" type="submit" (click)="disableStudent(student, index)">
+                      <span>DISABLE</span>
+                  </button>
+              </td>
+              <td *ngIf="student.enable == 0 && userType == userAccessType.Admin">
+                  <button class="w-30 btn btn-sm btn-primary student-detail-container_add" type="submit" (click)="enableStudent(student, index)">
+                      <span>ENABLE</span>
+                  </button>
+              </td>              
               <td *ngIf="userType == userAccessType.Admin">
                 <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-text" (click)="deleteApplicant(student)"></button>
               </td>

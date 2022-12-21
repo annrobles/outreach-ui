@@ -54,7 +54,7 @@ export class AuthService extends MainService {
       this.mainNavItems = [
         {label: "Candidates", url: "/student-list", active: true},
         {label: "Companies", url: "/company", active: false},
-        {label: "Employees", url: "/employee", active: false},
+        {label: "Employers", url: "/employee", active: false},
         {label: "Sign out", url: "/signin", active: false}
       ]
     }
@@ -63,6 +63,7 @@ export class AuthService extends MainService {
       this.mainNavItems = [        
         {label: "Jobs", url: "/job", active: true},
         {label: "Candidates", url: "/student-list", active: false},
+        {label: "My Short List", url: "/short-list", active: false},
         {label: "Sign out", url: "/signin", active: false}
       ]
     }

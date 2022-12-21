@@ -16,4 +16,5 @@ export interface Student {
   college_id?: number,
   college_other?: string,
   international?: number
+  enable?: number
 }

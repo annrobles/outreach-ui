@@ -14,11 +14,11 @@ import { MessageService } from 'primeng/api';
 import { CollegeService } from "../../../../services/college.service";
 @UntilDestroy()
 @Component({
-  selector: 'student-list',
-  templateUrl: './student-list.component.html',
-  styleUrls: ['./student-list.component.less']
+  selector: 'short-list',
+  templateUrl: './short-list.component.html',
+  styleUrls: ['./short-list.component.less']
 })
-export class StudentListComponent implements OnInit, OnDestroy {
+export class ShortListComponent implements OnInit, OnDestroy {
 
   @Input() showRank: boolean = false;
   @Input() containerClass: string = "container";
@@ -33,7 +33,6 @@ export class StudentListComponent implements OnInit, OnDestroy {
   campus: any[];
   studentType: any[];
   colleges: {label: string, value: number}[] = [];
-  enable: any[];
 
   constructor(
     private router: Router,
@@ -46,8 +45,6 @@ export class StudentListComponent implements OnInit, OnDestroy {
 
     this.studentType = [{label: "Domestic", value: 0}, {label: "International", value: 1}];
     this.userType = this.authSvc.user.user_type_id;
-
-    this.enable = [{label: "Enable", value: 1}, {label: "Disable", value: 0}];
   }
 
   ngOnInit(): void {
@@ -105,32 +102,6 @@ export class StudentListComponent implements OnInit, OnDestroy {
         }
       });
 
-    }
-  }
-
-  disableStudent(student: Student, rowIndex: number) {
-    if (student.id) {
-      //this.loading = true;
-      // this.studentSvc.update(student.id, {"enable":0}).subscribe((result) => {
-      //   if (result.status) {
-      //     this.messageSvc.add({severity:'success', summary: result.message});
-      //     this.loading = false;          
-      //     this.students[rowIndex].enable = 0;
-      //   }
-      // })  
-    }
-  }
-
-  enableStudent(student: Student, rowIndex: number) {
-    if (student.id) {
-      //this.loading = true;
-      // this.studentSvc.update(student.id, {"enable":1}).subscribe((result) => {
-      //   if (result.status) {
-      //     this.messageSvc.add({severity:'success', summary: result.message});
-      //     this.loading = false;
-      //     this.students[rowIndex].enable = 1;
-      //   }
-      // })
     }
   }
 }

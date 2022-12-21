@@ -1,6 +1,9 @@
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { UserAccessType } from "../../../models/user-access-type.enum";
 import { EmployeeService } from '../../../services/employee.service';
@@ -82,6 +85,23 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
           this.employees[rowIndex].enable = 1;
         }
       })  
+    }
+  }
+
+  delete(employee: Employee) {
+    if (employee.id) {
+
+      this.employeeSvc.deleteById(employee.id).pipe(
+        untilDestroyed(this),
+        catchError(err => {
+          this.messageSvc.add({severity:'error', summary: err.error.message});
+          return throwError(err)
+        })
+      ).subscribe((result) => {
+        this.employees = this.employees.filter(item => item.id != employee.id);
+        this.messageSvc.add({severity:'success', summary: result.message});
+      });
+
     }
   }
 

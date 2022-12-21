@@ -5,7 +5,7 @@ export abstract class MainService {
 
   constructor(protected http: HttpClient) { }
 
-  private readonly fallbackURL = 'https://404.corebridge.net/';
+  private readonly fallbackURL = 'https://404.nevisco.ca/';
   private readonly authorizationHeaderValue = localStorage.getItem("token") || "";
 
   getAPIBase(route: string = ''): string {
