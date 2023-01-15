@@ -10,7 +10,8 @@ export interface UserBasicInformation {
   availability: boolean,
   international?: number,
   college_id?: number,
-  college_other?:string
+  college_other?: string,
+  video_link?: string
 }
 
 export interface Source {

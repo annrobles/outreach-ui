@@ -25,7 +25,7 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 3rem" *ngIf="userType == userAccessType.Company"></th>
-              <th></th>
+              <!-- <th></th> -->
               <th scope="col" pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
               <th scope="col" pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
               <th scope="col" pSortableColumn="availability">Availability <p-sortIcon field="availability"></p-sortIcon></th>
@@ -37,7 +37,7 @@
             </tr>
               <tr>
                   <th style="width: 3rem" *ngIf="userType == userAccessType.Company"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-                  <th></th>
+                  <!-- <th></th> -->
                   <th>
                       <p-columnFilter type="text" field="name"></p-columnFilter>
                   </th>
@@ -89,12 +89,12 @@
                 <td *ngIf="userType == userAccessType.Company" style="padding: 1rem 1rem;">
                   <p-tableCheckbox [value]="student"></p-tableCheckbox>
                 </td>
-                <td (click)="viewStudent(student)">
+                <!-- <td (click)="viewStudent(student)">
                   <span class="pi pi-bars" [pReorderableRowHandle]="index" *ngIf="reorderableColumns"></span>
                   <div style="width: 30px; height: 30px; border-radius: 50%;">
                     <img src="assets/avatar-icon.jpeg" alt="" style="width: 30px; height: 30px; border-radius: 50%;">
                   </div>
-                </td>
+                </td> -->
                 <td (click)="viewStudent(student)">
                   {{ getName(student.first_name, student.last_name) }}
                 </td>

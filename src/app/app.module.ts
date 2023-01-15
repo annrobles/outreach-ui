@@ -21,6 +21,7 @@ import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -82,7 +83,8 @@ import { AuthGuard } from "./core/auth.guard";
     ToastModule,
     ProgressSpinnerModule,
     BreadcrumbModule,
-    RadioButtonModule
+    RadioButtonModule,
+    CheckboxModule
   ],
   exports: [
     StudentDetailComponent,

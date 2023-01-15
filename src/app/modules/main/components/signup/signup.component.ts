@@ -19,6 +19,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   email?: string;
   isEmployer: boolean = false;
   loadingOpacity = 0;
+  isAgree: boolean = false;
 
   private pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{7,}/;
 
@@ -52,10 +53,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.signupService.signup({email: this.email, name: this.name, user_type_id: this.user_type_id}).subscribe(
       (result) => {
         if (result.status) {
-          if (result.status) {
-            this.messageService.add({severity:'success', summary: result.message});
-            this.router.navigateByUrl('/signin');
-          }
+          this.messageService.add({severity:'info', summary: "You will receive email for verification", life: 10000});
+          this.messageService.add({severity:'success', summary: result.message, life: 1000});
+          this.signinClick();
         }
       },
       (errors) => {
@@ -67,5 +67,9 @@ export class SignupComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  signinClick() {
+    this.router.navigateByUrl('/signin');
   }
 }
