@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   isEmployer: boolean = false;
   loadingOpacity = 0;
   isAgree: boolean = false;
-
+  inprogress: boolean = false;
   private pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{7,}/;
 
   constructor(
@@ -50,9 +50,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   signupClick() {
+    this.inprogress = true;
     this.signupService.signup({email: this.email, name: this.name, user_type_id: this.user_type_id}).subscribe(
       (result) => {
         if (result.status) {
+          this.inprogress = false;
           this.messageService.add({severity:'info', summary: "You will receive email for verification", life: 10000});
           this.messageService.add({severity:'success', summary: result.message, life: 1000});
           this.signinClick();
@@ -65,6 +67,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         else {
           this.messageService.add({severity:'error', summary: errors["error"].message});
         }
+        this.inprogress = false;
       }
     );
   }
