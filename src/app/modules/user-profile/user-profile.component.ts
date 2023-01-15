@@ -38,7 +38,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     availability: false,
     international: undefined,
     college_id: undefined,
-    college_other: ""
+    college_other: "",
+    video_link: ""
   };
 
   newSkill: UserSkill;

@@ -21,7 +21,7 @@ import { CollegeService } from "../../../../services/college.service";
 export class StudentListComponent implements OnInit, OnDestroy {
 
   @Input() showRank: boolean = false;
-  @Input() containerClass: string = "container";
+  @Input() containerClass: string = "student-list-container";
   @Input() reorderableColumns: boolean = false;
 
   students:Student[] = [];
@@ -110,27 +110,27 @@ export class StudentListComponent implements OnInit, OnDestroy {
 
   disableStudent(student: Student, rowIndex: number) {
     if (student.id) {
-      //this.loading = true;
-      // this.studentSvc.update(student.id, {"enable":0}).subscribe((result) => {
-      //   if (result.status) {
-      //     this.messageSvc.add({severity:'success', summary: result.message});
-      //     this.loading = false;          
-      //     this.students[rowIndex].enable = 0;
-      //   }
-      // })  
+      this.loading = true;
+      this.studentSvc.update(student.id, {"enable":0, "email": student.email}).subscribe((result) => {
+        if (result.status) {
+          this.messageSvc.add({severity:'success', summary: result.message});
+          this.loading = false;          
+          this.students[rowIndex].enable = 0;
+        }
+      })  
     }
   }
 
   enableStudent(student: Student, rowIndex: number) {
     if (student.id) {
-      //this.loading = true;
-      // this.studentSvc.update(student.id, {"enable":1}).subscribe((result) => {
-      //   if (result.status) {
-      //     this.messageSvc.add({severity:'success', summary: result.message});
-      //     this.loading = false;
-      //     this.students[rowIndex].enable = 1;
-      //   }
-      // })
+      this.loading = true;
+      this.studentSvc.update(student.id, {"enable":1, "email": student.email}).subscribe((result) => {
+        if (result.status) {
+          this.messageSvc.add({severity:'success', summary: result.message});
+          this.loading = false;
+          this.students[rowIndex].enable = 1;
+        }
+      })
     }
   }
 }

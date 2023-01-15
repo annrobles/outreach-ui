@@ -6,10 +6,6 @@
 
 <div class="student-view-container">
   <div>
-    <div class="student-view-avatar-container">
-      <img src="/dist/views/assets/avatar-icon.jpeg" alt="">
-    </div>
-
     <div class="mt-4 student-view-info">
       <div class="student-view-name">
         {{ userInfo.first_name }} {{ userInfo.last_name }}
@@ -18,8 +14,9 @@
       <div class="student-view-contact">
         <span><i class="pi pi-phone" style="font-size: 1rem"></i>: {{ userInfo.contact_number }}</span>
         <span><i class="pi pi-envelope" style="font-size: 1rem"></i>: {{ userInfo.email }}</span>
-        <span><i class="pi pi-linkedin" style="font-size: 1rem"></i>: {{ userInfo.link }}</span>
+        <span><i class="pi pi-linkedin" style="font-size: 1rem"></i>: {{ userInfo.link }}</span>        
         <div>Status: <span [class]="'student-badge status-' + userInfo.availability">{{ userInfo.availability == 1 ? "AVAILABLE" : "UNAVAILABLE" }}</span></div>
+        <span class="video-link">Video Profile: <a [href]="userInfo.video_link" target="_blank">{{ userInfo.video_link }}</a></span>
       </div>
     </div>
   </div>
