@@ -16,8 +16,8 @@
         <span><i class="pi pi-envelope" style="font-size: 1rem"></i>: {{ userInfo.email }}</span>
         <span><i class="pi pi-linkedin" style="font-size: 1rem"></i>: {{ userInfo.link }}</span>        
         <div>Status: <span [class]="'student-badge status-' + userInfo.availability">{{ userInfo.availability == 1 ? "AVAILABLE" : "UNAVAILABLE" }}</span></div>
-        <span class="video-link">Video Profile: <a [href]="userInfo.video_link" target="_blank">{{ userInfo.video_link }}</a></span>
-        <span class="assessment-link">Assessment Results: <a [href]="userInfo.assessment_results_link" target="_blank">{{ userInfo.assessment_results_link }}</a></span>
+        <span class="video-link"><strong>Video Profile:</strong> <a [href]="userInfo.video_link" target="_blank">{{ userInfo.video_link }}</a></span>
+        <span class="assessment-link" *ngIf="userType == userAccessType.Company && userInfo.assessment_results_link != ''"><strong>Assessment Results:</strong> <a [href]="userInfo.assessment_results_link" target="_blank">{{ userInfo.assessment_results_link }}</a></span>
       </div>
     </div>
   </div>
@@ -55,49 +55,66 @@
   </div>
 </div>
 
-<div class="student-view-container student-view-addition-info mt-3 mb-3" *ngIf="userType == userAccessType.Admin">
-  <div class="col-lg-1 col-md-1 col-sm-12">
-    <div class="row">
-      <label style="text-align: left;">Rank:</label>
-      <div class="form-floating">
-        <input type="text"
-          class="form-control student-rank"
-          id="floatingInput"
-          [(ngModel)]="userInfo.rank"
-          name="first_name"
-          autocomplete="off">
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-10 col-md-10 col-sm-12">
-    <div class="row">
-      <label style="text-align: left;">Skills:</label>
+<ng-container *ngIf="userType == userAccessType.Admin">
+  <div class="student-view-container student-view-addition-info mt-3 mb-3">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <label style="text-align: left;">Assessment Results URL</label>
       <div class="form-floating">
         <input type="text"
           class="form-control"
           id="floatingInput"
-          [(ngModel)]="userInfo.skills"
-          name="first_name"
+          [(ngModel)]="userInfo.assessment_results_link"
+          name="link"
           autocomplete="off">
       </div>
     </div>
   </div>
-  <div class="col-lg-1 col-md-1 col-sm-12">
-    <div class="row company-add-button  text-right">
-      <div class="form-floating">
+  
+  <div class="student-view-container student-view-addition-info mt-3 mb-3">
+    <div class="col-lg-1 col-md-1 col-sm-12">
+      <div class="row">
+        <label style="text-align: left;">Rank:</label>
+        <div class="form-floating">
+          <input type="text"
+            class="form-control student-rank"
+            id="floatingInput"
+            [(ngModel)]="userInfo.rank"
+            name="first_name"
+            autocomplete="off">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-12">
+      <div class="row">
+        <label style="text-align: left;">Skills:</label>
+        <div class="form-floating">
+          <input type="text"
+            class="form-control"
+            id="floatingInput"
+            [(ngModel)]="userInfo.skills"
+            name="first_name"
+            autocomplete="off">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="student-view-container mt-3 mb-3">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div>
         <button class="w-30 btn btn-sm btn-primary student-detail-container__submit-primary" type="submit" (click)="update(userInfo)">
           <span>UPDATE</span>
         </button>
       </div>
     </div>
   </div>
-</div>
-
-<div class="mb-6" *ngIf="userType == userAccessType.Admin">
-  <company-list 
-    [companyHeader]="'List of Companies the User Added'" 
-    [showAddCompanyButton]="showAddCompanyButton" 
-    [adminViewingUser]="true"
-    [userId]="userId">
-  </company-list>
-</div>
+  
+  <div class="mb-6">
+    <company-list 
+      [companyHeader]="'List of Companies the User Added'" 
+      [showAddCompanyButton]="showAddCompanyButton" 
+      [adminViewingUser]="true"
+      [userId]="userId">
+    </company-list>
+  </div>
+</ng-container>
