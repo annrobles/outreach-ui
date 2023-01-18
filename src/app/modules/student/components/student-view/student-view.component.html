@@ -17,6 +17,7 @@
         <span><i class="pi pi-linkedin" style="font-size: 1rem"></i>: {{ userInfo.link }}</span>        
         <div>Status: <span [class]="'student-badge status-' + userInfo.availability">{{ userInfo.availability == 1 ? "AVAILABLE" : "UNAVAILABLE" }}</span></div>
         <span class="video-link">Video Profile: <a [href]="userInfo.video_link" target="_blank">{{ userInfo.video_link }}</a></span>
+        <span class="assessment-link">Assessment Results: <a [href]="userInfo.assessment_results_link" target="_blank">{{ userInfo.assessment_results_link }}</a></span>
       </div>
     </div>
   </div>

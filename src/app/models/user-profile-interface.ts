@@ -11,7 +11,8 @@ export interface UserBasicInformation {
   international?: number,
   college_id?: number,
   college_other?: string,
-  video_link?: string
+  video_link?: string,
+  assessment_results_link?: string
 }
 
 export interface Source {

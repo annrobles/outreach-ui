@@ -81,6 +81,20 @@
   
     <div class="row">
       <div class="col-lg-6 col-md-6">
+        <label style="text-align: left;">Assessment Results URL</label>
+        <div class="form-floating">
+          <input type="text"
+            class="form-control"
+            id="floatingInput"
+            [(ngModel)]="userBasicInformation.assessment_results_link"
+            name="link"
+            autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6">
         <div class="form-group">
           <label for="exampleFormControlTextarea1">About</label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [(ngModel)]='userBasicInformation.about'></textarea>
