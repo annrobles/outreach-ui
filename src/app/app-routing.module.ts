@@ -21,6 +21,7 @@ import { EmployeeListComponent } from './modules/employee/employee-list/employee
 import { ShortListComponent } from "./modules/student/components/short-list/short-list.component";
 import { PasswordComponent } from './modules/main/components/password/password.component';
 import { Roles } from './models/user-access-type.enum';
+import { PrivacyComponent } from "./modules/main/pages/privacy/privacy.component";
 
 const routes: Routes = [
   {
@@ -119,6 +120,12 @@ const routes: Routes = [
     component: ShortListComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'privacy',
+    data: { frameless: true, userRoles: [] },
+    component: PrivacyComponent,
+    canActivate: []
+  }
 ];
 
 @NgModule({

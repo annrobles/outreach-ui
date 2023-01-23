@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
   
       if (event instanceof NavigationEnd) {    
-        if (event.url == "/signin" || event.url == "/signup" || event.url  == "/")  {
+        if (event.url == "/signin" || event.url == "/signup" || event.url  == "/" || event.url == "/privacy")  {
           this.headerVisible = false;
           this.bannerText = "";
           this.mainNavItems.map((item) => {
